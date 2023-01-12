@@ -177,7 +177,7 @@ class ListItemCell: UITableViewCell {
             fireView.rightAnchor.constraint(equalTo: descriptionLabel.leftAnchor, constant: -3),
             fireView.bottomAnchor.constraint(equalTo: calorieContainer.bottomAnchor, constant: -3),
             descriptionLabel.rightAnchor.constraint(equalTo: calorieContainer.rightAnchor, constant: -7),
-            descriptionLabel.bottomAnchor.constraint(equalTo: calorieContainer.bottomAnchor, constant: -6),
+            descriptionLabel.centerYAnchor.constraint(equalTo: calorieContainer.centerYAnchor),
             
             badgeContainer.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -5),
             badgeContainer.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -1),

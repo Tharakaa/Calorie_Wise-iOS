@@ -26,6 +26,7 @@ class RecipeListView: UITableViewController, ListItemDelegate {
         tableView.showsVerticalScrollIndicator = true
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.singleLine
         tableView.dataSource = self
+        tableView.separatorInset = UIEdgeInsets.init(top: 0, left: 10, bottom: 0, right: 10)
         
         if (ApiCall.isLoggedIn()) {
             let loginButton = UIBarButtonItem(image: UIImage(systemName: "person.badge.shield.checkmark.fill"), style: .plain, target: self, action: #selector(goToAccount))

@@ -8,8 +8,18 @@
 import UIKit
 import Lottie
 
-class RecipeDetailView: UIViewController {
-
+class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "nutriCell", for: indexPath) as! NutriCell
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 6
+    }
+    
     let label = UILabel()
     let descriptionLabel = UILabel()
     var animationView = LottieAnimationView()
@@ -17,6 +27,7 @@ class RecipeDetailView: UIViewController {
     var imageContainer = UIImageView()
     let container = UIView()
     var isBookMarked = false
+    var messages: [String] = [String]()
     
     var recipe : Recipe? {
         didSet {
@@ -105,7 +116,7 @@ class RecipeDetailView: UIViewController {
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         //descriptionLabel.text = ""
         descriptionLabel.numberOfLines = 0
-        descriptionLabel.font = UIFont.preferredFont(forTextStyle: .title3)
+        descriptionLabel.font = UIFont.preferredFont(forTextStyle: .body)
         descriptionLabel.adjustsFontForContentSizeCategory = true
         
         var bookmarkGesture: UITapGestureRecognizer!
@@ -157,21 +168,28 @@ class RecipeDetailView: UIViewController {
         mainScore.text = "8"
         mainScore.numberOfLines = 0
         mainScore.font = label.font.withSize(22)
-        mainScore.adjustsFontForContentSizeCategory = true
         
         let scoreOutOf = UILabel();
         scoreOutOf.translatesAutoresizingMaskIntoConstraints = false
         scoreOutOf.text = "/10"
         scoreOutOf.numberOfLines = 0
         scoreOutOf.font = label.font.withSize(10)
-        scoreOutOf.adjustsFontForContentSizeCategory = true
+
+        
+        let healthLabel = UILabel();
+        healthLabel.translatesAutoresizingMaskIntoConstraints = false
+        healthLabel.text = "Health Score :"
+        healthLabel.numberOfLines = 0
+        healthLabel.font = UIFont.preferredFont(forTextStyle: .callout)
+        calorieLabel.adjustsFontForContentSizeCategory = true
+        scrollView.addSubview(healthLabel)
         
         let calorieContainer = UIView()
         calorieContainer.translatesAutoresizingMaskIntoConstraints = false
         calorieContainer.backgroundColor = .systemGray5
         calorieContainer.layer.cornerRadius = 14
         calorieContainer.addSubview(fireView)
-        calorieContainer.addSubview(descriptionLabel)
+        calorieContainer.addSubview(calorieLabel)
         scrollView.addSubview(calorieContainer)
         
         let badgeContainer = UIView()
@@ -181,6 +199,40 @@ class RecipeDetailView: UIViewController {
         badgeContainer.addSubview(mainScore)
         badgeContainer.addSubview(scoreOutOf)
         scrollView.addSubview(badgeContainer)
+        
+        let nutrionLabel = UILabel()
+        nutrionLabel.translatesAutoresizingMaskIntoConstraints = false
+        nutrionLabel.text = "Nutrition Information"
+        nutrionLabel.numberOfLines = 0
+        nutrionLabel.font = .boldSystemFont(ofSize: 22)
+        nutrionLabel.adjustsFontForContentSizeCategory = true
+        scrollView.addSubview(nutrionLabel)
+        
+        let perServe = UILabel()
+        perServe.translatesAutoresizingMaskIntoConstraints = false
+        perServe.text = "(Per Serving)"
+        perServe.numberOfLines = 0
+        perServe.font = UIFont.preferredFont(forTextStyle: .caption1)
+        perServe.adjustsFontForContentSizeCategory = true
+        scrollView.addSubview(perServe)
+        
+        // Table view
+        let nutrionTable = UITableView()
+        nutrionTable.showsVerticalScrollIndicator = true
+        nutrionTable.separatorStyle = UITableViewCell.SeparatorStyle.singleLine
+        nutrionTable.separatorStyle = UITableViewCell.SeparatorStyle.singleLine
+        nutrionTable.dataSource = self
+        nutrionTable.separatorInset = UIEdgeInsets.init(top: 0, left: 15, bottom: 0, right: 15)
+        nutrionTable.register(NutriCell.self, forCellReuseIdentifier: "nutriCell")
+        nutrionTable.translatesAutoresizingMaskIntoConstraints = false;
+        nutrionTable.isScrollEnabled = false
+        nutrionTable.rowHeight = 45
+        scrollView.addSubview(nutrionTable)
+        
+        let temp = UILabel();
+        temp.text = ""
+        temp.translatesAutoresizingMaskIntoConstraints = false;
+        scrollView.addSubview(temp)
         
         view.addSubview(scrollView)
         
@@ -201,37 +253,71 @@ class RecipeDetailView: UIViewController {
             imageContainer.topAnchor.constraint(equalTo: container.topAnchor),
             imageContainer.centerXAnchor.constraint(equalTo: container.centerXAnchor),
             
+            animationView.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -6),
+            animationView.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -6),
+            animationView.heightAnchor.constraint(equalToConstant: 60),
+            animationView.widthAnchor.constraint(equalToConstant: 60),
+            
             label.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -20),
-            label.topAnchor.constraint(equalTo: imageContainer.bottomAnchor, constant: 10),
-            label.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            label.topAnchor.constraint(equalTo: container.bottomAnchor, constant: 10),
+            label.centerXAnchor.constraint(equalTo: container.centerXAnchor),
             
-            calorieContainer.topAnchor.constraint(equalTo: fireView.topAnchor, constant: -4),
-            calorieContainer.leftAnchor.constraint(equalTo: fireView.leftAnchor, constant: -5),
-            calorieContainer.bottomAnchor.constraint(equalTo: label.bottomAnchor, constant: -2),
-            calorieContainer.rightAnchor.constraint(equalTo: scrollView.rightAnchor, constant: -5),
-            fireView.rightAnchor.constraint(equalTo: calorieLabel.leftAnchor, constant: -3),
-            fireView.bottomAnchor.constraint(equalTo: calorieContainer.bottomAnchor, constant: -3),
-            calorieLabel.rightAnchor.constraint(equalTo: calorieContainer.rightAnchor, constant: -7),
-            calorieLabel.bottomAnchor.constraint(equalTo: calorieContainer.bottomAnchor, constant: -6),
-            
-            badgeContainer.rightAnchor.constraint(equalTo: calorieContainer.rightAnchor, constant: -5),
-            badgeContainer.topAnchor.constraint(equalTo: label.bottomAnchor, constant: -1),
+            badgeContainer.leftAnchor.constraint(equalTo: healthLabel.rightAnchor, constant: 5),
+            badgeContainer.centerYAnchor.constraint(equalTo: healthLabel.centerYAnchor),
             badgeContainer.leftAnchor.constraint(equalTo: mainScore.leftAnchor, constant: -3),
             badgeContainer.topAnchor.constraint(equalTo: mainScore.topAnchor, constant: 0),
             scoreOutOf.rightAnchor.constraint(equalTo: badgeContainer.rightAnchor, constant: -3),
             scoreOutOf.bottomAnchor.constraint(equalTo: badgeContainer.bottomAnchor, constant: -3),
             mainScore.rightAnchor.constraint(equalTo: badgeContainer.rightAnchor, constant: -18),
             mainScore.bottomAnchor.constraint(equalTo: scoreOutOf.topAnchor, constant: 13),
+
+            healthLabel.leftAnchor.constraint(equalTo: calorieContainer.rightAnchor, constant: 10),
+            healthLabel.centerYAnchor.constraint(equalTo: calorieContainer.centerYAnchor),
+            healthLabel.topAnchor.constraint(equalTo: calorieContainer.topAnchor),
+
+            calorieContainer.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 4),
+            calorieContainer.leftAnchor.constraint(equalTo: label.leftAnchor, constant: -5),
+            calorieContainer.bottomAnchor.constraint(equalTo: fireView.bottomAnchor, constant: 3),
+            calorieContainer.rightAnchor.constraint(equalTo: calorieLabel.rightAnchor, constant: 5),
+            //calorieContainer.rightAnchor.constraint(equalTo: healthLabel.leftAnchor, constant: -10),
+            calorieLabel.leftAnchor.constraint(equalTo: fireView.rightAnchor, constant: 3),
+            calorieLabel.centerYAnchor.constraint(equalTo: calorieContainer.centerYAnchor),
+            fireView.leftAnchor.constraint(equalTo: calorieContainer.leftAnchor, constant: 5),
+            fireView.centerYAnchor.constraint(equalTo: calorieContainer.centerYAnchor),
+            fireView.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 7),
             
-            descriptionLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -20),
-            descriptionLabel.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 10),
-            descriptionLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -15),
+            descriptionLabel.widthAnchor.constraint(equalTo: container.widthAnchor, constant: -20),
+            descriptionLabel.topAnchor.constraint(equalTo: calorieContainer.bottomAnchor, constant: 15),
             descriptionLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             
-            animationView.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -6),
-            animationView.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -6),
-            animationView.heightAnchor.constraint(equalToConstant: 60),
-            animationView.widthAnchor.constraint(equalToConstant: 60),
+//            nutrionTable.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor),
+            
+            //nutrionTable.bottomAnchor.constraint(equalTo: temp.topAnchor),
+            
+            nutrionLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 15),
+            nutrionLabel.centerXAnchor.constraint(equalTo: descriptionLabel.centerXAnchor),
+            
+            perServe.topAnchor.constraint(equalTo: nutrionLabel.bottomAnchor),
+            perServe.centerXAnchor.constraint(equalTo: descriptionLabel.centerXAnchor),
+            
+            nutrionTable.topAnchor.constraint(equalTo: perServe.bottomAnchor, constant: 5),
+            nutrionTable.leftAnchor.constraint(equalTo: descriptionLabel.leftAnchor),
+            nutrionTable.rightAnchor.constraint(equalTo: descriptionLabel.rightAnchor),
+            nutrionTable.heightAnchor.constraint(equalToConstant: 280),
+            
+            temp.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            temp.topAnchor.constraint(equalTo: nutrionTable.bottomAnchor),
+            temp.leftAnchor.constraint(equalTo: nutrionTable.leftAnchor),
+            temp.rightAnchor.constraint(equalTo: nutrionTable.rightAnchor),
+            //nutrionTable.heightAnchor.constraint(equalToConstant: 200)
+//            nutrionTable.widthAnchor.constraint(equalTo: descriptionLabel.widthAnchor, multiplier: 0.8),
+//            nutrionTable.centerXAnchor.constraint(equalTo: descriptionLabel.centerXAnchor),
+            
+            //nutrionTable.leftAnchor.constraint(equalTo: view.safeLeftAnchor),
+            //nutrionTable.rightAnchor.constraint(equalTo: view.safeRightAnchor),
+            //nutrionTable.widthAnchor.constraint(equalToConstant: 200),
+            //nutrionTable.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            
         ])
     }
     
@@ -239,4 +325,56 @@ class RecipeDetailView: UIViewController {
         navigationController?.pushViewController(AccountView(), animated: true)
     }
 
+}
+
+class NutriCell: UITableViewCell {
+    
+    let label = UILabel()
+    let descriptionLabel = UILabel()
+    
+//    var recipe : Recipe? {
+//        didSet {
+//            descriptionLabel.text = recipe?.smallDescription
+//            label.text = recipe?.name
+//        }
+//    }
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Protein"
+        label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 20)
+        label.textAlignment = .right
+        label.adjustsFontForContentSizeCategory = true
+        
+        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        descriptionLabel.text = "356g"
+        descriptionLabel.numberOfLines = 0
+        descriptionLabel.font = .boldSystemFont(ofSize: 20)
+        descriptionLabel.textAlignment = .right
+        descriptionLabel.adjustsFontForContentSizeCategory = true
+        
+        contentView.addSubview(label)
+        contentView.addSubview(descriptionLabel)
+        
+        NSLayoutConstraint.activate([
+            label.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 40),
+            label.topAnchor.constraint(equalTo: contentView.topAnchor),
+            label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            
+            descriptionLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -45),
+            descriptionLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            descriptionLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+        ])
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
 }

@@ -1,0 +1,494 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E68FBE1C296F521B0052C45E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE1B296F521B0052C45E /* AppDelegate.swift */; };
+		E68FBE1E296F521B0052C45E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE1D296F521B0052C45E /* SceneDelegate.swift */; };
+		E68FBE25296F521C0052C45E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E68FBE24296F521C0052C45E /* Assets.xcassets */; };
+		E68FBE28296F521C0052C45E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E68FBE26296F521C0052C45E /* LaunchScreen.storyboard */; };
+		E68FBE33296F52990052C45E /* food-background.png in Resources */ = {isa = PBXBuildFile; fileRef = E68FBE32296F52990052C45E /* food-background.png */; };
+		E68FBE36296F52A10052C45E /* 97064-bookmark-icon.json in Resources */ = {isa = PBXBuildFile; fileRef = E68FBE34296F52A10052C45E /* 97064-bookmark-icon.json */; };
+		E68FBE37296F52A10052C45E /* 42135-done.json in Resources */ = {isa = PBXBuildFile; fileRef = E68FBE35296F52A10052C45E /* 42135-done.json */; };
+		E68FBE44296F537B0052C45E /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE3B296F537A0052C45E /* AccountView.swift */; };
+		E68FBE45296F537B0052C45E /* RecipeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE3C296F537A0052C45E /* RecipeListView.swift */; };
+		E68FBE46296F537B0052C45E /* SearchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE3D296F537A0052C45E /* SearchListView.swift */; };
+		E68FBE47296F537B0052C45E /* RecipeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE3E296F537B0052C45E /* RecipeDetailView.swift */; };
+		E68FBE48296F537B0052C45E /* BookmarkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE3F296F537B0052C45E /* BookmarkListView.swift */; };
+		E68FBE49296F537B0052C45E /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE40296F537B0052C45E /* LoginView.swift */; };
+		E68FBE4A296F537B0052C45E /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE41296F537B0052C45E /* RegisterView.swift */; };
+		E68FBE4B296F537B0052C45E /* Extenstions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE42296F537B0052C45E /* Extenstions.swift */; };
+		E68FBE4C296F537B0052C45E /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE43296F537B0052C45E /* HomeView.swift */; };
+		E68FBE4F296F53870052C45E /* ListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE4D296F53870052C45E /* ListItemCell.swift */; };
+		E68FBE50296F53870052C45E /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE4E296F53870052C45E /* CategoryCell.swift */; };
+		E68FBE54296F53920052C45E /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE51296F53920052C45E /* Category.swift */; };
+		E68FBE55296F53920052C45E /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE52296F53920052C45E /* Recipe.swift */; };
+		E68FBE56296F53920052C45E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE53296F53920052C45E /* User.swift */; };
+		E68FBE59296F539E0052C45E /* CellAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE57296F539E0052C45E /* CellAnimator.swift */; };
+		E68FBE5A296F539E0052C45E /* ApiCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE58296F539E0052C45E /* ApiCall.swift */; };
+		E68FBE5D296F53E40052C45E /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = E68FBE5C296F53E40052C45E /* Lottie */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E68FBE18296F521B0052C45E /* Calorie Wise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Calorie Wise.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E68FBE1B296F521B0052C45E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E68FBE1D296F521B0052C45E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		E68FBE24296F521C0052C45E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E68FBE27296F521C0052C45E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E68FBE29296F521C0052C45E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E68FBE32296F52990052C45E /* food-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "food-background.png"; sourceTree = "<group>"; };
+		E68FBE34296F52A10052C45E /* 97064-bookmark-icon.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "97064-bookmark-icon.json"; sourceTree = "<group>"; };
+		E68FBE35296F52A10052C45E /* 42135-done.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "42135-done.json"; sourceTree = "<group>"; };
+		E68FBE3B296F537A0052C45E /* AccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		E68FBE3C296F537A0052C45E /* RecipeListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeListView.swift; sourceTree = "<group>"; };
+		E68FBE3D296F537A0052C45E /* SearchListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchListView.swift; sourceTree = "<group>"; };
+		E68FBE3E296F537B0052C45E /* RecipeDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeDetailView.swift; sourceTree = "<group>"; };
+		E68FBE3F296F537B0052C45E /* BookmarkListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkListView.swift; sourceTree = "<group>"; };
+		E68FBE40296F537B0052C45E /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		E68FBE41296F537B0052C45E /* RegisterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		E68FBE42296F537B0052C45E /* Extenstions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extenstions.swift; sourceTree = "<group>"; };
+		E68FBE43296F537B0052C45E /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		E68FBE4D296F53870052C45E /* ListItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItemCell.swift; sourceTree = "<group>"; };
+		E68FBE4E296F53870052C45E /* CategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
+		E68FBE51296F53920052C45E /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		E68FBE52296F53920052C45E /* Recipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
+		E68FBE53296F53920052C45E /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		E68FBE57296F539E0052C45E /* CellAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellAnimator.swift; sourceTree = "<group>"; };
+		E68FBE58296F539E0052C45E /* ApiCall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCall.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E68FBE15296F521B0052C45E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E68FBE5D296F53E40052C45E /* Lottie in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E68FBE0F296F521B0052C45E = {
+			isa = PBXGroup;
+			children = (
+				E68FBE1A296F521B0052C45E /* Calorie Wise */,
+				E68FBE19296F521B0052C45E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E68FBE19296F521B0052C45E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E68FBE18296F521B0052C45E /* Calorie Wise.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E68FBE1A296F521B0052C45E /* Calorie Wise */ = {
+			isa = PBXGroup;
+			children = (
+				E68FBE3A296F52EF0052C45E /* modal */,
+				E68FBE39296F52E90052C45E /* view */,
+				E68FBE38296F52E30052C45E /* service */,
+				E68FBE2F296F522C0052C45E /* assets */,
+				E68FBE1B296F521B0052C45E /* AppDelegate.swift */,
+				E68FBE1D296F521B0052C45E /* SceneDelegate.swift */,
+				E68FBE3B296F537A0052C45E /* AccountView.swift */,
+				E68FBE3F296F537B0052C45E /* BookmarkListView.swift */,
+				E68FBE42296F537B0052C45E /* Extenstions.swift */,
+				E68FBE43296F537B0052C45E /* HomeView.swift */,
+				E68FBE40296F537B0052C45E /* LoginView.swift */,
+				E68FBE3E296F537B0052C45E /* RecipeDetailView.swift */,
+				E68FBE3C296F537A0052C45E /* RecipeListView.swift */,
+				E68FBE41296F537B0052C45E /* RegisterView.swift */,
+				E68FBE3D296F537A0052C45E /* SearchListView.swift */,
+				E68FBE24296F521C0052C45E /* Assets.xcassets */,
+				E68FBE26296F521C0052C45E /* LaunchScreen.storyboard */,
+				E68FBE29296F521C0052C45E /* Info.plist */,
+			);
+			path = "Calorie Wise";
+			sourceTree = "<group>";
+		};
+		E68FBE2F296F522C0052C45E /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				E68FBE31296F528A0052C45E /* lottie */,
+				E68FBE30296F52850052C45E /* img */,
+			);
+			path = assets;
+			sourceTree = "<group>";
+		};
+		E68FBE30296F52850052C45E /* img */ = {
+			isa = PBXGroup;
+			children = (
+				E68FBE32296F52990052C45E /* food-background.png */,
+			);
+			path = img;
+			sourceTree = "<group>";
+		};
+		E68FBE31296F528A0052C45E /* lottie */ = {
+			isa = PBXGroup;
+			children = (
+				E68FBE35296F52A10052C45E /* 42135-done.json */,
+				E68FBE34296F52A10052C45E /* 97064-bookmark-icon.json */,
+			);
+			path = lottie;
+			sourceTree = "<group>";
+		};
+		E68FBE38296F52E30052C45E /* service */ = {
+			isa = PBXGroup;
+			children = (
+				E68FBE58296F539E0052C45E /* ApiCall.swift */,
+				E68FBE57296F539E0052C45E /* CellAnimator.swift */,
+			);
+			path = service;
+			sourceTree = "<group>";
+		};
+		E68FBE39296F52E90052C45E /* view */ = {
+			isa = PBXGroup;
+			children = (
+				E68FBE4E296F53870052C45E /* CategoryCell.swift */,
+				E68FBE4D296F53870052C45E /* ListItemCell.swift */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		E68FBE3A296F52EF0052C45E /* modal */ = {
+			isa = PBXGroup;
+			children = (
+				E68FBE51296F53920052C45E /* Category.swift */,
+				E68FBE52296F53920052C45E /* Recipe.swift */,
+				E68FBE53296F53920052C45E /* User.swift */,
+			);
+			path = modal;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E68FBE17296F521B0052C45E /* Calorie Wise */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E68FBE2C296F521C0052C45E /* Build configuration list for PBXNativeTarget "Calorie Wise" */;
+			buildPhases = (
+				E68FBE14296F521B0052C45E /* Sources */,
+				E68FBE15296F521B0052C45E /* Frameworks */,
+				E68FBE16296F521B0052C45E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Calorie Wise";
+			packageProductDependencies = (
+				E68FBE5C296F53E40052C45E /* Lottie */,
+			);
+			productName = "Calorie Wise";
+			productReference = E68FBE18296F521B0052C45E /* Calorie Wise.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E68FBE10296F521B0052C45E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1410;
+				LastUpgradeCheck = 1410;
+				TargetAttributes = {
+					E68FBE17296F521B0052C45E = {
+						CreatedOnToolsVersion = 14.1;
+					};
+				};
+			};
+			buildConfigurationList = E68FBE13296F521B0052C45E /* Build configuration list for PBXProject "Calorie Wise" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E68FBE0F296F521B0052C45E;
+			packageReferences = (
+				E68FBE5B296F53E40052C45E /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
+			productRefGroup = E68FBE19296F521B0052C45E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E68FBE17296F521B0052C45E /* Calorie Wise */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E68FBE16296F521B0052C45E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E68FBE28296F521C0052C45E /* LaunchScreen.storyboard in Resources */,
+				E68FBE37296F52A10052C45E /* 42135-done.json in Resources */,
+				E68FBE36296F52A10052C45E /* 97064-bookmark-icon.json in Resources */,
+				E68FBE25296F521C0052C45E /* Assets.xcassets in Resources */,
+				E68FBE33296F52990052C45E /* food-background.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E68FBE14296F521B0052C45E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E68FBE50296F53870052C45E /* CategoryCell.swift in Sources */,
+				E68FBE4A296F537B0052C45E /* RegisterView.swift in Sources */,
+				E68FBE44296F537B0052C45E /* AccountView.swift in Sources */,
+				E68FBE47296F537B0052C45E /* RecipeDetailView.swift in Sources */,
+				E68FBE56296F53920052C45E /* User.swift in Sources */,
+				E68FBE1C296F521B0052C45E /* AppDelegate.swift in Sources */,
+				E68FBE45296F537B0052C45E /* RecipeListView.swift in Sources */,
+				E68FBE59296F539E0052C45E /* CellAnimator.swift in Sources */,
+				E68FBE4C296F537B0052C45E /* HomeView.swift in Sources */,
+				E68FBE48296F537B0052C45E /* BookmarkListView.swift in Sources */,
+				E68FBE4B296F537B0052C45E /* Extenstions.swift in Sources */,
+				E68FBE55296F53920052C45E /* Recipe.swift in Sources */,
+				E68FBE4F296F53870052C45E /* ListItemCell.swift in Sources */,
+				E68FBE1E296F521B0052C45E /* SceneDelegate.swift in Sources */,
+				E68FBE49296F537B0052C45E /* LoginView.swift in Sources */,
+				E68FBE46296F537B0052C45E /* SearchListView.swift in Sources */,
+				E68FBE5A296F539E0052C45E /* ApiCall.swift in Sources */,
+				E68FBE54296F53920052C45E /* Category.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E68FBE26296F521C0052C45E /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E68FBE27296F521C0052C45E /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E68FBE2A296F521C0052C45E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		E68FBE2B296F521C0052C45E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E68FBE2D296F521C0052C45E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Calorie Wise/Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "tharaka.Calorie-Wise";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E68FBE2E296F521C0052C45E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Calorie Wise/Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "tharaka.Calorie-Wise";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E68FBE13296F521B0052C45E /* Build configuration list for PBXProject "Calorie Wise" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E68FBE2A296F521C0052C45E /* Debug */,
+				E68FBE2B296F521C0052C45E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E68FBE2C296F521C0052C45E /* Build configuration list for PBXNativeTarget "Calorie Wise" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E68FBE2D296F521C0052C45E /* Debug */,
+				E68FBE2E296F521C0052C45E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E68FBE5B296F53E40052C45E /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E68FBE5C296F53E40052C45E /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E68FBE5B296F53E40052C45E /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = E68FBE10296F521B0052C45E /* Project object */;
+}

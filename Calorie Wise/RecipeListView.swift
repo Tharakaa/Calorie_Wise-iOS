@@ -11,8 +11,9 @@ import Lottie
 class RecipeListView: UITableViewController, ListItemDelegate {
     
     let cellId = "CellId"
-    var catId = "63b5c3ce0fdd6d2452f789ba"
-    var recipes: [RecipeDTO] = []
+    var minCalorie = 0
+    var maxCalorie = 200
+    var recipes: [ItemDTO] = []
     static var needToRefresh = false;
     
     override func viewDidLoad() {
@@ -36,7 +37,7 @@ class RecipeListView: UITableViewController, ListItemDelegate {
             self.navigationItem.rightBarButtonItem  = loginButton
         }
         
-        ApiCall.fetchRecipesForCategory(category: catId){ (recipes) in
+        ApiCall.fetchRecipesForCategory(minCal: minCalorie, maxCal: maxCalorie){ (recipes) in
             self.recipes = recipes ?? []
             self.tableView.reloadData()
             RecipeListView.needToRefresh = false
@@ -54,7 +55,7 @@ class RecipeListView: UITableViewController, ListItemDelegate {
         }
         
         if (RecipeListView.needToRefresh) {
-            ApiCall.fetchRecipesForCategory(category: catId){ (recipes) in
+            ApiCall.fetchRecipesForCategory(minCal: minCalorie, maxCal: maxCalorie){ (recipes) in
                 self.recipes = recipes ?? []
                 self.tableView.reloadData()
                 RecipeListView.needToRefresh = false
@@ -72,9 +73,9 @@ class RecipeListView: UITableViewController, ListItemDelegate {
         let dto = self.recipes[indexPath.row]
         let image = (UIImage(systemName: "carrot")?.withTintColor(.systemGray, renderingMode: .alwaysOriginal))!
         ApiCall.fetchProductImage(path: dto.imagePath){ (newImage) in
-            cell.recipe = Recipe(_id: dto._id, name: dto.name, smallDescription: dto.smallDescription, description: dto.description, image: newImage, isBookMarked: dto.isBookMarked)
+            cell.item = Item(_id: dto._id, name: dto.name, description: dto.description, image: newImage, isBookMarked: dto.isBookMarked, score: dto.score, calorie: dto.calorie, protein: dto.protein, fat: dto.fat, carbohydrate: dto.carbohydrate, fiber: dto.fiber, calcium: dto.calcium)
         }
-        cell.recipe = Recipe(_id: dto._id, name: dto.name, smallDescription: dto.smallDescription, description: dto.description, image: image, isBookMarked: dto.isBookMarked)
+        cell.item = Item(_id: dto._id, name: dto.name, description: dto.description, image: image, isBookMarked: dto.isBookMarked, score: dto.score, calorie: dto.calorie, protein: dto.protein, fat: dto.fat, carbohydrate: dto.carbohydrate, fiber: dto.fiber, calcium: dto.calcium)
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
         cell.delegate = self
         return cell
@@ -99,11 +100,11 @@ class RecipeListView: UITableViewController, ListItemDelegate {
         animator.animate(cell: cell, at: indexPath, in: tableView)
     }
     
-    func didPressCell(sender: Recipe){
+    func didPressCell(sender: Item){
         print(sender)
         
         let recipeDetailView = RecipeDetailView()
-        recipeDetailView.recipe = sender
+        recipeDetailView.item = sender
         navigationController?.pushViewController(recipeDetailView, animated: true)
     }
     

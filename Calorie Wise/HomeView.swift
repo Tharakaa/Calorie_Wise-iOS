@@ -12,6 +12,10 @@ class HomeView: UITableViewController, CategoryDelegate {
     let cellId = "cellCat"
     var categories: [CategoryDTO] = []
     
+    let loadingView = UIView()
+    let spinner = UIActivityIndicatorView()
+    let loadingLabel = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         ApiCall.loadData()
@@ -35,9 +39,15 @@ class HomeView: UITableViewController, CategoryDelegate {
         let searchButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(goToSearch))
         self.navigationItem.rightBarButtonItems  = [loginButton, searchButton]
         
+        setLoadingScreen()
         ApiCall.fetchCategories{ (categories) in
+            self.removeLoadingScreen()
+            if (categories == nil) {
+                let alert = UIAlertController(title: "Alert", message: "Server is not responding at the moment. Please try again later.", preferredStyle: .alert)
+                //alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
             self.categories = categories ?? []
-            
             //UIView.transition(with: self.tableView, duration: 1.0, options: .transitionCurlDown, animations: {self.tableView.reloadData()}, completion: nil)
             self.tableView.reloadData()
         }
@@ -70,10 +80,10 @@ class HomeView: UITableViewController, CategoryDelegate {
         let categoryDto = self.categories[indexPath.row]
         
         ApiCall.fetchCategoryImage(path: categoryDto.imagePath){ (newImage) in
-            cell.category = Category(id: categoryDto._id, name: categoryDto.name, image: newImage, fontColor: .white)
+            cell.category = Category(id: categoryDto._id, name: categoryDto.name, image: newImage, fontColor: .white, maxCalorie: categoryDto.maxCalorie, minCalorie: categoryDto.minCalorie)
         }
         
-        cell.category = Category(id: categoryDto._id, name: categoryDto.name, image: imageView!, fontColor: .label)
+        cell.category = Category(id: categoryDto._id, name: categoryDto.name, image: imageView!, fontColor: .label, maxCalorie: categoryDto.maxCalorie, minCalorie: categoryDto.minCalorie)
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
         cell.delegate = self
         return cell
@@ -97,18 +107,11 @@ class HomeView: UITableViewController, CategoryDelegate {
         animator.animate(cell: cell, at: indexPath, in: tableView)
     }
     
-    func didPressCell(sender: String){
-        print(sender)
-        var category:CategoryDTO?;
-        for cat in categories {
-            if (cat._id == sender) {
-                category = cat
-                break
-            }
-        }
+    func didPressCell(sender: Category){
         let nextPage = RecipeListView()
-        nextPage.catId = category!._id
-        nextPage.title = category!.name
+        nextPage.minCalorie = sender.minCalorie
+        nextPage.maxCalorie = sender.maxCalorie
+        nextPage.title = sender.name
         navigationController?.pushViewController(nextPage, animated: true)
     }
     
@@ -121,6 +124,42 @@ class HomeView: UITableViewController, CategoryDelegate {
     
     @objc func goToAccount() {
         navigationController?.pushViewController(AccountView(), animated: true)
+    }
+    
+    private func setLoadingScreen() {
+        
+        // Sets spinner
+        spinner.style = UIActivityIndicatorView.Style.large
+        spinner.color = .label
+        spinner.startAnimating()
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Adds text and spinner to the view
+        //loadingView.backgroundColor = .purple
+        loadingView.alpha = 0.6
+        loadingView.translatesAutoresizingMaskIntoConstraints = false;
+        loadingView.addSubview(spinner)
+        //loadingView.backgroundColor = .purple
+        tableView.addSubview(loadingView)
+        
+        loadingView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        loadingView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        loadingView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50).isActive = true
+        spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+    }
+    
+    // Remove the activity indicator from the main view
+    private func removeLoadingScreen() {
+        
+        // Hides and stops the text and the spinner
+        spinner.stopAnimating()
+        spinner.isHidden = true
+        loadingView.isHidden = true
     }
     
 }

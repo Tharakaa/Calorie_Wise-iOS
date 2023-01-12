@@ -12,7 +12,7 @@ class BookmarkListView: UITableViewController, ListItemDelegate {
     
     let cellId = "favCellId"
     var catId = ""
-    var recipes: [RecipeDTO] = []
+    var items: [ItemDTO] = []
     static var needToRefresh = false;
     
     override func viewDidLoad() {
@@ -28,7 +28,7 @@ class BookmarkListView: UITableViewController, ListItemDelegate {
         tableView.dataSource = self
         
         ApiCall.getBookmarkedForUser{ (recipes) in
-            self.recipes = recipes ?? []
+            self.items = recipes ?? []
             self.tableView.reloadData()
             RecipeListView.needToRefresh = false
         }
@@ -39,7 +39,7 @@ class BookmarkListView: UITableViewController, ListItemDelegate {
         
         if (RecipeListView.needToRefresh) {
             ApiCall.getBookmarkedForUser{ (recipes) in
-                self.recipes = recipes ?? []
+                self.items = recipes ?? []
                 self.tableView.reloadData()
                 RecipeListView.needToRefresh = false
             }
@@ -53,19 +53,19 @@ class BookmarkListView: UITableViewController, ListItemDelegate {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! ListItemCell
-        let dto = self.recipes[indexPath.row]
+        let dto = self.items[indexPath.row]
         let image = (UIImage(systemName: "carrot")?.withTintColor(.systemGray, renderingMode: .alwaysOriginal))!
         ApiCall.fetchProductImage(path: dto.imagePath){ (newImage) in
-            cell.recipe = Recipe(_id: dto._id, name: dto.name, smallDescription: dto.smallDescription, description: dto.description, image: newImage, isBookMarked: dto.isBookMarked)
+            cell.item = Item(_id: dto._id, name: dto.name, description: dto.description, image: newImage, isBookMarked: dto.isBookMarked, score: dto.score, calorie: dto.calorie, protein: dto.protein, fat: dto.fat, carbohydrate: dto.carbohydrate, fiber: dto.fiber, calcium: dto.calcium)
         }
-        cell.recipe = Recipe(_id: dto._id, name: dto.name, smallDescription: dto.smallDescription, description: dto.description, image: image, isBookMarked: dto.isBookMarked)
+        cell.item = Item(_id: dto._id, name: dto.name, description: dto.description, image: image, isBookMarked: dto.isBookMarked, score: dto.score, calorie: dto.calorie, protein: dto.protein, fat: dto.fat, carbohydrate: dto.carbohydrate, fiber: dto.fiber, calcium: dto.calcium)
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
         cell.delegate = self
         return cell
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recipes.count
+        return items.count
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -83,11 +83,11 @@ class BookmarkListView: UITableViewController, ListItemDelegate {
         animator.animate(cell: cell, at: indexPath, in: tableView)
     }
     
-    func didPressCell(sender: Recipe){
+    func didPressCell(sender: Item){
         print(sender)
         
         let recipeDetailView = RecipeDetailView()
-        recipeDetailView.recipe = sender
+        recipeDetailView.item = sender
         navigationController?.pushViewController(recipeDetailView, animated: true)
     }
     
@@ -103,7 +103,7 @@ class BookmarkListView: UITableViewController, ListItemDelegate {
     func showToast(message: String){
         self.showToast(message: message, font: .systemFont(ofSize: 12.0))
         ApiCall.getBookmarkedForUser{ (recipes) in
-            self.recipes = recipes ?? []
+            self.items = recipes ?? []
             self.tableView.reloadData()
             RecipeListView.needToRefresh = false
         }

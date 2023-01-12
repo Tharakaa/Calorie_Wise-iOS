@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CategoryDelegate {
-    func didPressCell(sender: String)
+    func didPressCell(sender: Category)
 }
 class CategoryCell: UITableViewCell {
     
@@ -31,7 +31,7 @@ class CategoryCell: UITableViewCell {
     }
     
     @objc func cellClicked() {
-        delegate.didPressCell(sender: category!.id)
+        delegate.didPressCell(sender: category!)
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

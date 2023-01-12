@@ -10,35 +10,51 @@ import Lottie
 
 class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "nutriCell", for: indexPath) as! NutriCell
-        cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
-    }
-    
     let label = UILabel()
     let descriptionLabel = UILabel()
+    let calorieLabel = UILabel()
+    let mainScore = UILabel();
+    let badgeContainer = UIView()
     var animationView = LottieAnimationView()
     //var imageObj = UIImage()
     var imageContainer = UIImageView()
     let container = UIView()
     var isBookMarked = false
     var messages: [String] = [String]()
+    var nutriDataLabel: [String] = []
+    var nutriDataValue: [String] = []
     
-    var recipe : Recipe? {
+    var item : Item? {
         didSet {
-            print("XX")
-            print(recipe?.name)
-            let imageObj = recipe!.image
+            let imageObj = item!.image
             imageContainer.image = imageObj
             container.addSubview(imageContainer)
-            descriptionLabel.text = recipe?.smallDescription
-            label.text = recipe?.name
-            isBookMarked = ((recipe?.isBookMarked) == true)
+            descriptionLabel.text = item?.description
+            calorieLabel.text = "\(item?.calorie ?? 0) calories"
+            mainScore.text = "\(item?.score ?? 0)"
+            if (item != nil && item!.score < 6) {
+                badgeContainer.backgroundColor = .systemOrange
+            } else if (item != nil && item!.score < 8) {
+                badgeContainer.backgroundColor = .systemYellow
+            } else {
+                badgeContainer.backgroundColor = .systemGreen
+            }
+            
+            nutriDataLabel.insert("Calorie", at: 0)
+            nutriDataValue.insert("\(item?.calorie ?? 0) g", at: 0)
+            nutriDataLabel.insert("Protein", at: 1)
+            nutriDataValue.insert("\(item?.protein ?? 0) g", at: 1)
+            nutriDataLabel.insert("Total Fat", at: 2)
+            nutriDataValue.insert("\(item?.fat ?? 0) g", at: 2)
+            nutriDataLabel.insert("Carbohydrate", at: 3)
+            nutriDataValue.insert("\(item?.carbohydrate ?? 0) g", at: 3)
+            nutriDataLabel.insert("Dietary Fiber", at: 4)
+            nutriDataValue.insert("\(item?.fiber ?? 0) g", at: 4)
+            nutriDataLabel.insert("Calcium", at: 5)
+            nutriDataValue.insert("\(item?.calcium ?? 0) mg", at: 5)
+            
+            label.text = item?.name
+            isBookMarked = ((item?.isBookMarked) == true)
             if (isBookMarked) {
                 animationView.play(fromProgress: 0, toProgress: 1, completion: {_ in
                     self.animationView.currentProgress = 1
@@ -67,19 +83,19 @@ class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDele
         if (ApiCall.isLoggedIn()) {
             if (isBookMarked) {
                 animationView.play(fromProgress: 1, toProgress: 0, completion: {_ in
-                    self.recipe?.isBookMarked = false
+                    self.item?.isBookMarked = false
                     self.isBookMarked = false
                     self.animationView.currentProgress = 0
-                    ApiCall.removeBookmark(recipe: self.recipe!._id!){ () in
+                    ApiCall.removeBookmark(item: self.item!._id!){ () in
                         self.showToast(message: "Save Removed", font: .systemFont(ofSize: 12.0))
                     }
                 })
             } else {
                 animationView.play(fromProgress: 0, toProgress: 1, completion: {_ in
-                    self.recipe?.isBookMarked = true
+                    self.item?.isBookMarked = true
                     self.isBookMarked = true
                     self.animationView.currentProgress = 1
-                    ApiCall.addBookmark(recipe: self.recipe!._id!){ () in
+                    ApiCall.addBookmark(item: self.item!._id!){ () in
                         self.showToast(message: "Recipe Saved", font: .systemFont(ofSize: 12.0))
                     }
                 })
@@ -150,9 +166,8 @@ class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDele
         scrollView.addSubview(label)
         scrollView.addSubview(descriptionLabel)
         
-        let calorieLabel = UILabel()
         calorieLabel.translatesAutoresizingMaskIntoConstraints = false
-        calorieLabel.text = "356 calories"
+        //calorieLabel.text = "356 calories"
         calorieLabel.numberOfLines = 0
         calorieLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
         calorieLabel.adjustsFontForContentSizeCategory = true
@@ -163,9 +178,8 @@ class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDele
         fireView.contentMode = .scaleAspectFill
         fireView.clipsToBounds = true
         
-        let mainScore = UILabel();
         mainScore.translatesAutoresizingMaskIntoConstraints = false
-        mainScore.text = "8"
+        //mainScore.text = "8"
         mainScore.numberOfLines = 0
         mainScore.font = label.font.withSize(22)
         
@@ -192,9 +206,8 @@ class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDele
         calorieContainer.addSubview(calorieLabel)
         scrollView.addSubview(calorieContainer)
         
-        let badgeContainer = UIView()
         badgeContainer.translatesAutoresizingMaskIntoConstraints = false
-        badgeContainer.backgroundColor = .systemGreen
+        //badgeContainer.backgroundColor = .systemGreen
         badgeContainer.layer.cornerRadius = 10
         badgeContainer.addSubview(mainScore)
         badgeContainer.addSubview(scoreOutOf)
@@ -230,8 +243,10 @@ class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDele
         scrollView.addSubview(nutrionTable)
         
         let temp = UILabel();
-        temp.text = ""
+        temp.text = "Details are based on taste.com.au"
+        temp.font = UIFont.preferredFont(forTextStyle: .footnote)
         temp.translatesAutoresizingMaskIntoConstraints = false;
+        temp.textAlignment = .center
         scrollView.addSubview(temp)
         
         view.addSubview(scrollView)
@@ -305,24 +320,30 @@ class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDele
             nutrionTable.rightAnchor.constraint(equalTo: descriptionLabel.rightAnchor),
             nutrionTable.heightAnchor.constraint(equalToConstant: 280),
             
-            temp.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            temp.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -15),
             temp.topAnchor.constraint(equalTo: nutrionTable.bottomAnchor),
             temp.leftAnchor.constraint(equalTo: nutrionTable.leftAnchor),
             temp.rightAnchor.constraint(equalTo: nutrionTable.rightAnchor),
-            //nutrionTable.heightAnchor.constraint(equalToConstant: 200)
-//            nutrionTable.widthAnchor.constraint(equalTo: descriptionLabel.widthAnchor, multiplier: 0.8),
-//            nutrionTable.centerXAnchor.constraint(equalTo: descriptionLabel.centerXAnchor),
-            
-            //nutrionTable.leftAnchor.constraint(equalTo: view.safeLeftAnchor),
-            //nutrionTable.rightAnchor.constraint(equalTo: view.safeRightAnchor),
-            //nutrionTable.widthAnchor.constraint(equalToConstant: 200),
-            //nutrionTable.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            temp.centerXAnchor.constraint(equalTo: nutrionTable.centerXAnchor)
             
         ])
     }
     
     @objc func goToAccount() {
         navigationController?.pushViewController(AccountView(), animated: true)
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "nutriCell", for: indexPath) as! NutriCell
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
+        cell.label.text = nutriDataLabel[indexPath.row]
+        cell.descriptionLabel.text = nutriDataValue[indexPath.row]
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 6
     }
 
 }

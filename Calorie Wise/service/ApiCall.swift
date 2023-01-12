@@ -9,7 +9,7 @@ import UIKit
 
 class ApiCall: ObservableObject{
     
-    static let baseURL = "https://cook-book-km1g.onrender.com/cookbook"
+    static let baseURL = "https://calorie-wise.onrender.com/api"
     static var user: UserDTO? = nil
     
     static var delegate:ListItemDelegate!
@@ -54,20 +54,20 @@ class ApiCall: ObservableObject{
         
     }
     
-    static func fetchRecipesForCategory(category: String, completion:@escaping ([RecipeDTO]?) -> ()) {
-        let urlPath = (baseURL + "/getRecipesForCategory")
+    static func fetchRecipesForCategory(minCal: Int, maxCal: Int, completion:@escaping ([ItemDTO]?) -> ()) {
+        let urlPath = (baseURL + "/getItemsForCategory")
         let url = URL(string: urlPath)!
         
-        let parameters: [String: String?] = ["categoryId": category, "username": user?._id]
+        let parameters: [String: Any?] = ["minCal": minCal, "maxCal": maxCal, "username": user?._id]
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type") // change as per server requirements
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.httpBody = try! JSONSerialization.data(withJSONObject: parameters)
         URLSession.shared.dataTask(with: request) { data, response, error in
-            let categories:[RecipeDTO]?;
+            let categories:[ItemDTO]?;
             if (data != nil) {
-                categories = try? JSONDecoder().decode([RecipeDTO].self, from: data!)
+                categories = try? JSONDecoder().decode([ItemDTO].self, from: data!)
             } else {
                 categories = nil
             }
@@ -78,8 +78,8 @@ class ApiCall: ObservableObject{
         
     }
     
-    static func searchRecipes(searchTerm: String, completion:@escaping ([RecipeDTO]?) -> ()) {
-        let urlPath = (baseURL + "/searchRecipes")
+    static func searchRecipes(searchTerm: String, completion:@escaping ([ItemDTO]?) -> ()) {
+        let urlPath = (baseURL + "/searchItems")
         let url = URL(string: urlPath)!
         
         let parameters: [String: String?] = ["searchParam": searchTerm, "username": user?._id]
@@ -90,9 +90,9 @@ class ApiCall: ObservableObject{
         request.httpBody = try! JSONSerialization.data(withJSONObject: parameters)
         
         URLSession.shared.dataTask(with: request) { data, response, error in
-            let categories:[RecipeDTO]?;
+            let categories:[ItemDTO]?;
             if (data != nil) {
-                categories = try? JSONDecoder().decode([RecipeDTO].self, from: data!)
+                categories = try? JSONDecoder().decode([ItemDTO].self, from: data!)
             } else {
                 categories = nil
             }
@@ -103,14 +103,14 @@ class ApiCall: ObservableObject{
         
     }
     
-    static func getBookmarkedForUser(completion:@escaping ([RecipeDTO]?) -> ()) {
+    static func getBookmarkedForUser(completion:@escaping ([ItemDTO]?) -> ()) {
         let urlPath = (baseURL + "/getBookmarksForUser/" + (user?._id ?? ""))
         let url = URL(string: urlPath)!
         
         URLSession.shared.dataTask(with: url) { data, response, error in
-            let categories:[RecipeDTO]?;
+            let categories:[ItemDTO]?;
             if (data != nil) {
-                categories = try? JSONDecoder().decode([RecipeDTO].self, from: data!)
+                categories = try? JSONDecoder().decode([ItemDTO].self, from: data!)
             } else {
                 categories = nil
             }
@@ -209,11 +209,11 @@ class ApiCall: ObservableObject{
         
     }
     
-    static func addBookmark(recipe: String, completion:@escaping () -> ()) {
+    static func addBookmark(item: String, completion:@escaping () -> ()) {
         let urlPath = (baseURL + "/saveBookmark")
         let url = URL(string: urlPath)!
         
-        let parameters: [String: String?] = ["recipe": recipe, "username": user?._id]
+        let parameters: [String: String?] = ["item": item, "username": user?._id]
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type") // change as per server requirements
@@ -227,11 +227,11 @@ class ApiCall: ObservableObject{
         }.resume()
     }
     
-    static func removeBookmark(recipe: String, completion:@escaping () -> ()) {
+    static func removeBookmark(item: String, completion:@escaping () -> ()) {
         let urlPath = (baseURL + "/removeBookmark")
         let url = URL(string: urlPath)!
         
-        let parameters: [String: String?] = ["recipe": recipe, "username": user?._id]
+        let parameters: [String: String?] = ["item": item, "username": user?._id]
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type") // change as per server requirements

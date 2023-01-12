@@ -7,21 +7,32 @@
 
 import UIKit
 
-struct Recipe {
+struct Item {
     var _id: String?
     var name: String
-    var smallDescription: String
     var description: String
     var image: UIImage
     var isBookMarked: Bool = false
+    var score: Int
+    var calorie: Int
+    var protein: Double
+    var fat: Double
+    var carbohydrate: Double
+    var fiber: Double
+    var calcium: Double
 }
 
-struct RecipeDTO: Codable {
+struct ItemDTO: Codable {
     var _id: String?
-    var category: String?
     var name: String
-    var smallDescription: String
     var description: String
     var imagePath: String
     var isBookMarked: Bool = false
+    var score: Int
+    var calorie: Int
+    var protein: Double
+    var fat: Double
+    var carbohydrate: Double
+    var fiber: Double
+    var calcium: Double
 }

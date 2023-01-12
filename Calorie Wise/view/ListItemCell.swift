@@ -9,7 +9,7 @@ import UIKit
 import Lottie
 
 protocol ListItemDelegate {
-    func didPressCell(sender: Recipe)
+    func didPressCell(sender: Item)
     func goToLoginPress()
     func showToast(message: String)
 }
@@ -18,19 +18,29 @@ class ListItemCell: UITableViewCell {
     var delegate:ListItemDelegate!
     let label = UILabel()
     let descriptionLabel = UILabel()
+    let mainScore = UILabel();
+    let badgeContainer = UIView()
     var animationView = LottieAnimationView()
     //var imageObj = UIImage()
     var imageContainer = UIImageView()
     let container = UIView()
     var isBookMarked = false
     
-    var recipe : Recipe? {
+    var item : Item? {
         didSet {
-            let imageObj = recipe!.image
+            let imageObj = item!.image
             imageContainer.image = imageObj
-            //descriptionLabel.text = recipe?.smallDescription
-            label.text = recipe?.name
-            isBookMarked = ((recipe?.isBookMarked) == true)
+            descriptionLabel.text = "\(item?.calorie ?? 0) calories"
+            mainScore.text = "\(item?.score ?? 0)"
+            if (item != nil && item!.score < 6) {
+                badgeContainer.backgroundColor = .systemOrange
+            } else if (item != nil && item!.score < 8) {
+                badgeContainer.backgroundColor = .systemYellow
+            } else {
+                badgeContainer.backgroundColor = .systemGreen
+            }
+            label.text = item?._id
+            isBookMarked = ((item?.isBookMarked) == true)
             if (isBookMarked) {
                 self.animationView.currentProgress = 1
             } else {
@@ -40,7 +50,7 @@ class ListItemCell: UITableViewCell {
     }
     
     @objc func cellClicked() {
-        delegate.didPressCell(sender: recipe!)
+        delegate.didPressCell(sender: item!)
     }
     
     @objc func bookmarkItem() {
@@ -48,18 +58,18 @@ class ListItemCell: UITableViewCell {
             if (isBookMarked) {
                 animationView.play(fromProgress: 1, toProgress: 0, completion: {_ in
                     self.isBookMarked = false
-                    self.recipe?.isBookMarked = false
+                    self.item?.isBookMarked = false
                     self.animationView.currentProgress = 0
-                    ApiCall.removeBookmark(recipe: self.recipe!._id!){ () in
+                    ApiCall.removeBookmark(item: self.item!._id!){ () in
                         self.delegate.showToast(message: "Save Removed")
                     }
                 })
             } else {
                 animationView.play(fromProgress: 0, toProgress: 1, completion: {_ in
                     self.isBookMarked = true
-                    self.recipe?.isBookMarked = true
+                    self.item?.isBookMarked = true
                     self.animationView.currentProgress = 1
-                    ApiCall.addBookmark(recipe: self.recipe!._id!){ () in
+                    ApiCall.addBookmark(item: self.item!._id!){ () in
                         self.delegate.showToast(message: "Recipe Saved")
                     }
                 })
@@ -96,7 +106,7 @@ class ListItemCell: UITableViewCell {
         label.adjustsFontForContentSizeCategory = true
         
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        descriptionLabel.text = "356 calories"
+        //descriptionLabel.text =
         descriptionLabel.numberOfLines = 0
         descriptionLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
         descriptionLabel.adjustsFontForContentSizeCategory = true
@@ -107,9 +117,8 @@ class ListItemCell: UITableViewCell {
         fireView.contentMode = .scaleAspectFill
         fireView.clipsToBounds = true
         
-        let mainScore = UILabel();
         mainScore.translatesAutoresizingMaskIntoConstraints = false
-        mainScore.text = "8"
+        //mainScore.text = "8"
         mainScore.numberOfLines = 0
         mainScore.font = label.font.withSize(22)
         mainScore.adjustsFontForContentSizeCategory = true
@@ -144,9 +153,8 @@ class ListItemCell: UITableViewCell {
         calorieContainer.addSubview(descriptionLabel)
         container.addSubview(calorieContainer)
         
-        let badgeContainer = UIView()
         badgeContainer.translatesAutoresizingMaskIntoConstraints = false
-        badgeContainer.backgroundColor = .systemGreen
+        //badgeContainer.backgroundColor = .systemGreen
         badgeContainer.layer.cornerRadius = 10
         badgeContainer.addSubview(mainScore)
         badgeContainer.addSubview(scoreOutOf)

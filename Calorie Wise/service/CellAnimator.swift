@@ -7,6 +7,7 @@
 
 import UIKit
 
+// Responsible for all animations within the application.
 typealias TableCellAnimation = (UITableViewCell, IndexPath, UITableView) -> Void
 
 final class TableViewAnimator {
@@ -28,6 +29,7 @@ class CellAnimator {
         return TableViewAnimator(animation: animation)
     }
 
+    // Make the table cells bounce upon loading.
     func makeMoveUpBounceAnimation(rowHeight: CGFloat, duration: TimeInterval, delayFactor: Double) -> TableCellAnimation {
         return { cell, indexPath, tableView in
             cell.transform = CGAffineTransform(translationX: 0, y: rowHeight)
@@ -44,6 +46,7 @@ class CellAnimator {
     }
     
     //https://stackoverflow.com/a/27988876
+    // make input fields shake. Used to denote invalid fields.
     func shakeView(viewToShake: UIView) {
         let animation = CABasicAnimation(keyPath: "position")
         animation.duration = 0.07
@@ -55,6 +58,7 @@ class CellAnimator {
     }
 }
 
+// Add a progress spinner to screen.
 class SpinnerViewController: UIViewController {
     var spinner = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
     override func loadView() {
@@ -71,6 +75,7 @@ class SpinnerViewController: UIViewController {
 }
 
 extension UIViewController {
+    // show a android like toast when certain API actions are finished.
     func showToast(message : String, font: UIFont) {
         let toastLabel = UILabel()
         toastLabel.translatesAutoresizingMaskIntoConstraints = false;
@@ -84,7 +89,7 @@ extension UIViewController {
         toastLabel.clipsToBounds  =  true
         self.view.addSubview(toastLabel)
         
-        toastLabel.bottomAnchor.constraint(equalTo: view.safeBottomAnchor).isActive = true
+        toastLabel.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -10).isActive = true
         toastLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         toastLabel.widthAnchor.constraint(equalToConstant: 180).isActive = true
         toastLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true

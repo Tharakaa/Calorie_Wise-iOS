@@ -8,6 +8,7 @@
 import UIKit
 import Lottie
 
+// protocol which can be implemented in table controller class to detect cell clicks
 protocol ListItemDelegate {
     func didPressCell(sender: Item)
     func goToLoginPress()
@@ -21,13 +22,13 @@ class ListItemCell: UITableViewCell {
     let mainScore = UILabel();
     let badgeContainer = UIView()
     var animationView = LottieAnimationView()
-    //var imageObj = UIImage()
     var imageContainer = UIImageView()
     let container = UIView()
     var isBookMarked = false
     
     var item : Item? {
         didSet {
+            // set items and details dynamically
             let imageObj = item!.image
             imageContainer.image = imageObj
             descriptionLabel.text = "\(item?.calorie ?? 0) calories"
@@ -39,7 +40,8 @@ class ListItemCell: UITableViewCell {
             } else {
                 badgeContainer.backgroundColor = .systemGreen
             }
-            label.text = item?._id
+            label.text = item?.name
+            // set animation state of bookmark animation depending on bookmarked state of the user.
             isBookMarked = ((item?.isBookMarked) == true)
             if (isBookMarked) {
                 self.animationView.currentProgress = 1
@@ -49,11 +51,14 @@ class ListItemCell: UITableViewCell {
         }
     }
     
+    // send clicked function to controller class through delegate
     @objc func cellClicked() {
         delegate.didPressCell(sender: item!)
     }
     
+    // Called when bookmark icon is clicked.
     @objc func bookmarkItem() {
+        // if not logged in. An alert is given saying to login
         if (ApiCall.isLoggedIn()) {
             if (isBookMarked) {
                 animationView.play(fromProgress: 1, toProgress: 0, completion: {_ in
@@ -79,20 +84,17 @@ class ListItemCell: UITableViewCell {
         }
     }
     
+    // set disaply item properties and layout constraints
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         var tapGesture: UITapGestureRecognizer!
         tapGesture = UITapGestureRecognizer(target: self, action: #selector(cellClicked))
         
-        //container.backgroundColor = .systemGray6
         container.layer.cornerRadius = 6
         container.translatesAutoresizingMaskIntoConstraints = false
         container.addGestureRecognizer(tapGesture)
         
-        //var imageContainer = UIImageView()
-        //var image = (UIImage(systemName: "carrot")?.withTintColor(.systemGray, renderingMode: .alwaysOriginal))!
-        //imageContainer.image = image
         imageContainer.translatesAutoresizingMaskIntoConstraints = false
         imageContainer.contentMode = .scaleAspectFill
         imageContainer.clipsToBounds = true
@@ -106,7 +108,6 @@ class ListItemCell: UITableViewCell {
         label.adjustsFontForContentSizeCategory = true
         
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        //descriptionLabel.text =
         descriptionLabel.numberOfLines = 0
         descriptionLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
         descriptionLabel.adjustsFontForContentSizeCategory = true
@@ -118,7 +119,6 @@ class ListItemCell: UITableViewCell {
         fireView.clipsToBounds = true
         
         mainScore.translatesAutoresizingMaskIntoConstraints = false
-        //mainScore.text = "8"
         mainScore.numberOfLines = 0
         mainScore.font = label.font.withSize(22)
         mainScore.adjustsFontForContentSizeCategory = true
@@ -133,10 +133,10 @@ class ListItemCell: UITableViewCell {
         var bookmarkGesture: UITapGestureRecognizer!
         bookmarkGesture = UITapGestureRecognizer(target: self, action: #selector(bookmarkItem))
         
+        // Add lottie animation as the bookmark button
         animationView = .init(name: "97064-bookmark-icon")
         animationView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         animationView.contentMode = .scaleAspectFit
-        //animationView.currentProgress = 1
         animationView.animationSpeed = 1.25
         animationView.translatesAutoresizingMaskIntoConstraints = false
         animationView.addGestureRecognizer(bookmarkGesture)
@@ -154,7 +154,6 @@ class ListItemCell: UITableViewCell {
         container.addSubview(calorieContainer)
         
         badgeContainer.translatesAutoresizingMaskIntoConstraints = false
-        //badgeContainer.backgroundColor = .systemGreen
         badgeContainer.layer.cornerRadius = 10
         badgeContainer.addSubview(mainScore)
         badgeContainer.addSubview(scoreOutOf)
@@ -196,10 +195,6 @@ class ListItemCell: UITableViewCell {
             mainScore.rightAnchor.constraint(equalTo: badgeContainer.rightAnchor, constant: -18),
             mainScore.bottomAnchor.constraint(equalTo: scoreOutOf.topAnchor, constant: 13),
             
-//            animationView.topAnchor.constraint(equalTo: container.topAnchor, constant: -11),
-//            animationView.rightAnchor.constraint(equalTo: container.rightAnchor, constant: 13),
-//            animationView.heightAnchor.constraint(equalToConstant: 50),
-//            animationView.widthAnchor.constraint(equalToConstant: 50),
             animationView.topAnchor.constraint(equalTo: container.topAnchor, constant: -11),
             animationView.leftAnchor.constraint(equalTo: container.leftAnchor, constant: -15),
             animationView.heightAnchor.constraint(equalToConstant: 50),

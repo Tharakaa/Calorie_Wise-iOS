@@ -7,9 +7,11 @@
 
 import UIKit
 
+// protocol which can be implemented in table controller class to detect cell clicks
 protocol CategoryDelegate {
     func didPressCell(sender: Category)
 }
+// Table cell class
 class CategoryCell: UITableViewCell {
     
     var delegate:CategoryDelegate!
@@ -19,6 +21,7 @@ class CategoryCell: UITableViewCell {
     
     var category : Category? {
         didSet {
+            // set details dynamically
             categoryButton.setTitle(category?.name, for: .normal)
             categoryButton.setBackgroundImage(category?.image, for: .normal)
             categoryButton.setTitleColor(category?.fontColor, for: .normal)
@@ -30,10 +33,12 @@ class CategoryCell: UITableViewCell {
         }
     }
     
+    // on click current category is sent through delegate
     @objc func cellClicked() {
         delegate.didPressCell(sender: category!)
     }
     
+    // Setting UI item properties and alignments
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -53,6 +58,7 @@ class CategoryCell: UITableViewCell {
         
         categoryButton.backgroundColor = .systemGray6
         
+        // setting properties of images
         categoryButton.subviews.filter{$0 is UIImageView}.forEach {
             $0.contentMode = .scaleAspectFill
             $0.layer.cornerRadius = 6

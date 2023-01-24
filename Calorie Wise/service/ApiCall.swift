@@ -7,17 +7,22 @@
 
 import UIKit
 
+// Class handles all API calls of the appilcation.
 class ApiCall: ObservableObject{
     
+    // backend URL
     static let baseURL = "https://calorie-wise.onrender.com/api"
+    // static object used to hold user data after login in. logged in user is checked using this.
     static var user: UserDTO? = nil
     
     static var delegate:ListItemDelegate!
     
+    // check if the user is logged in
     static func isLoggedIn() -> Bool {
         return (user != nil && user?._id != nil && user?._id.trimmingCharacters(in: .whitespacesAndNewlines) != "")
     }
     
+    // Clear saved user data on logout.
     static func logout() {
         user = nil
         let userDef:UserDefaults = .standard;
@@ -27,6 +32,7 @@ class ApiCall: ObservableObject{
         }
     }
     
+    // load data from saved dictionary and login again on app open.
     static func loadData() {
         let userDef:UserDefaults = .standard;
         let _id = userDef.string(forKey: "id")
@@ -40,13 +46,16 @@ class ApiCall: ObservableObject{
     static func fetchCategories(completion:@escaping ([CategoryDTO]?) -> ()) {
         let urlPath = (baseURL + "/getCategories")
         let url = URL(string: urlPath)!
+        // URL sessions are used to fetch data async without disturbing the main thread.
         URLSession.shared.dataTask(with: url) { data, response, error in
             let categories:[CategoryDTO]?;
             if (data != nil) {
+                // fetched data is parsed using the relevant class.
                 categories = try? JSONDecoder().decode([CategoryDTO].self, from: data!)
             } else {
                 categories = nil
             }
+            // After retriving the response data is sent using the main thread.
             DispatchQueue.main.async {
                 completion(categories)
             }
@@ -164,6 +173,7 @@ class ApiCall: ObservableObject{
                     completion(1)
                 }
             } else {
+                // On successful login. Data is saved to a dictionary to persists data even after app close.
                 self.user = try? JSONDecoder().decode(UserDTO.self, from: data!)
                 let userDef:UserDefaults = .standard;
                 userDef.set(self.user?._id, forKey: "id")
@@ -177,6 +187,7 @@ class ApiCall: ObservableObject{
         
     }
     
+    // Fetch images from backend. After fetching an UIImage is generated and sent.
     static func fetchCategoryImage(path: String, completion:@escaping (UIImage) -> ()) {
         let urlPath = (baseURL + "/public/" + path)
         let url = URL(string: urlPath)!

@@ -1,5 +1,5 @@
 //
-//  RecipeListView.swift
+//  SearchListView.swift
 //  Cook Book
 //
 //  Created by Tharaka Gamachchi on 2023-01-02.
@@ -19,39 +19,55 @@ class SearchListView: UITableViewController, ListItemDelegate, UISearchBarDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        //navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.largeTitleDisplayMode = .never
         title = "Search"
         
         searchBar.sizeToFit()
         navigationItem.titleView = searchBar
         searchBar.delegate = self
+        searchBar.autocapitalizationType = .none
         
         tableView.register(ListItemCell.self, forCellReuseIdentifier: cellId)
         tableView.delaysContentTouches = true
         tableView.showsVerticalScrollIndicator = true
-        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        tableView.separatorStyle = UITableViewCell.SeparatorStyle.singleLine
+        tableView.separatorInset = UIEdgeInsets.init(top: 0, left: 10, bottom: 0, right: 10)
         tableView.dataSource = self
         
         let logoutBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelClicked))
         self.navigationItem.rightBarButtonItem  = logoutBarButtonItem
-        
-//        ApiCall.searchRecipes(searchTerm: "")(category: catId){ (recipes) in
-//            self.recipes = recipes ?? []
-//            self.tableView.reloadData()
-//            RecipeListView.needToRefresh = false
-//        }
+        setEmptyMessage("Search Items to Show")
+    }
+    
+    func searchBarSearchButtonClicked( _ searchBar: UISearchBar) {
+        self.searchBar.endEditing(true)
+        self.setEmptyMessage("Searching")
+        ApiCall.searchRecipes(searchTerm: searchBar.text ?? ""){ (recipes) in
+            if (recipes != nil && recipes!.isEmpty) {
+                self.setEmptyMessage("No Items Found")
+            } else {
+                self.restore()
+            }
+            self.recipes = recipes ?? []
+            self.tableView.reloadData()
+            SearchListView.needToRefresh = false
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if (RecipeListView.needToRefresh) {
-//            ApiCall.fetchRecipesForCategory(category: catId){ (recipes) in
-//                self.recipes = recipes ?? []
-//                self.tableView.reloadData()
-//                RecipeListView.needToRefresh = false
-//            }
+        if (SearchListView.needToRefresh) {
+            self.setEmptyMessage("Searching")
+            ApiCall.searchRecipes(searchTerm: searchBar.text ?? ""){ (recipes) in
+                if (recipes != nil && recipes!.isEmpty) {
+                    self.setEmptyMessage("No Items Found")
+                } else {
+                    self.restore()
+                }
+                self.recipes = recipes ?? []
+                self.tableView.reloadData()
+                SearchListView.needToRefresh = false
+            }
         }
     }
     
@@ -85,7 +101,6 @@ class SearchListView: UITableViewController, ListItemDelegate, UISearchBarDelega
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        // fetch the animation from the TableAnimation enum and initialze the TableViewAnimator class
         let guide = view.safeAreaLayoutGuide
         let height = guide.layoutFrame.size.height
         let animator = CellAnimator().getAnimator(rowHeight: (height/4 + 10), duration: 0.85, delayFactor: 0.03)
@@ -93,8 +108,6 @@ class SearchListView: UITableViewController, ListItemDelegate, UISearchBarDelega
     }
     
     func didPressCell(sender: Item){
-        print(sender)
-        
         let recipeDetailView = RecipeDetailView()
         recipeDetailView.item = sender
         navigationController?.pushViewController(recipeDetailView, animated: true)
@@ -118,12 +131,32 @@ class SearchListView: UITableViewController, ListItemDelegate, UISearchBarDelega
     }
     
     @objc func cancelClicked() {
-        print("HERE")
         self.searchBar.endEditing(true)
     }
     
     @objc func goToAccount() {
         navigationController?.pushViewController(AccountView(), animated: true)
+    }
+    
+    // Set messages on empty tables.
+    func setEmptyMessage(_ message: String) {
+        let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+        messageLabel.text = message
+        messageLabel.textColor = .systemGray
+        messageLabel.font = UIFont.preferredFont(forTextStyle: .title2)
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
+        messageLabel.sizeToFit()
+        
+        tableView.backgroundView = messageLabel
+        tableView.separatorStyle = .none
+    }
+    
+    // Remove set messages before setting data.
+    func restore() {
+        tableView.backgroundView = nil
+        tableView.separatorStyle = UITableViewCell.SeparatorStyle.singleLine
+        tableView.separatorInset = UIEdgeInsets.init(top: 0, left: 10, bottom: 0, right: 10)
     }
     
 }

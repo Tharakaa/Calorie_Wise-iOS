@@ -8,6 +8,7 @@
 import UIKit
 import Lottie
 
+// Main list view. Data is dynamically loaded using the selected category.
 class RecipeListView: UITableViewController, ListItemDelegate {
     
     let cellId = "CellId"
@@ -19,7 +20,6 @@ class RecipeListView: UITableViewController, ListItemDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        //navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.largeTitleDisplayMode = .never
         
         tableView.register(ListItemCell.self, forCellReuseIdentifier: cellId)
@@ -29,6 +29,7 @@ class RecipeListView: UITableViewController, ListItemDelegate {
         tableView.dataSource = self
         tableView.separatorInset = UIEdgeInsets.init(top: 0, left: 10, bottom: 0, right: 10)
         
+        // Change user icon if logged in
         if (ApiCall.isLoggedIn()) {
             let loginButton = UIBarButtonItem(image: UIImage(systemName: "person.badge.shield.checkmark.fill"), style: .plain, target: self, action: #selector(goToAccount))
             self.navigationItem.rightBarButtonItem  = loginButton
@@ -101,8 +102,6 @@ class RecipeListView: UITableViewController, ListItemDelegate {
     }
     
     func didPressCell(sender: Item){
-        print(sender)
-        
         let recipeDetailView = RecipeDetailView()
         recipeDetailView.item = sender
         navigationController?.pushViewController(recipeDetailView, animated: true)

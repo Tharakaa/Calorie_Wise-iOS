@@ -18,17 +18,16 @@ class HomeView: UITableViewController, CategoryDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // load saved user data.
         ApiCall.loadData()
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.largeTitleDisplayMode = .never
         
-        //view.backgroundColor = .systemBackground
         tableView.register(CategoryCell.self, forCellReuseIdentifier: cellId)
         tableView.delaysContentTouches = true
         tableView.showsVerticalScrollIndicator = true
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         tableView.dataSource = self
-        //tableView.isHidden = true
         
         let loginButton:UIBarButtonItem
         if (ApiCall.isLoggedIn()) {
@@ -39,20 +38,20 @@ class HomeView: UITableViewController, CategoryDelegate {
         let searchButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(goToSearch))
         self.navigationItem.rightBarButtonItems  = [loginButton, searchButton]
         
+        // show loading screen until data is loaded
         setLoadingScreen()
         ApiCall.fetchCategories{ (categories) in
             self.removeLoadingScreen()
             if (categories == nil) {
                 let alert = UIAlertController(title: "Alert", message: "Server is not responding at the moment. Please try again later.", preferredStyle: .alert)
-                //alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             }
             self.categories = categories ?? []
-            //UIView.transition(with: self.tableView, duration: 1.0, options: .transitionCurlDown, animations: {self.tableView.reloadData()}, completion: nil)
             self.tableView.reloadData()
         }
     }
     
+    // refresh UI if logged in.
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let loginButton:UIBarButtonItem
@@ -67,15 +66,13 @@ class HomeView: UITableViewController, CategoryDelegate {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-    
+    // set table view cells with recieved data
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! CategoryCell
         
         let imageView = UIImage(named: "food-background.png")?.withTintColor(.systemGray, renderingMode: .alwaysOriginal)
-        //imageView.loadFrom(URLAddress: "https://cdn.arstechnica.net/wp-content/uploads/2018/06/macOS-Mojave-Dynamic-Wallpaper-transition.jpg")
         
         let categoryDto = self.categories[indexPath.row]
         
@@ -93,6 +90,7 @@ class HomeView: UITableViewController, CategoryDelegate {
         return self.categories.count
     }
     
+    // set height of each cell.
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let guide = view.safeAreaLayoutGuide
         let height = guide.layoutFrame.size.height
@@ -100,7 +98,6 @@ class HomeView: UITableViewController, CategoryDelegate {
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        // fetch the animation from the TableAnimation enum and initialze the TableViewAnimator class
         let guide = view.safeAreaLayoutGuide
         let height = guide.layoutFrame.size.height
         let animator = CellAnimator().getAnimator(rowHeight: (height/4 + 10), duration: 0.85, delayFactor: 0.03)
@@ -135,11 +132,9 @@ class HomeView: UITableViewController, CategoryDelegate {
         spinner.translatesAutoresizingMaskIntoConstraints = false
         
         // Adds text and spinner to the view
-        //loadingView.backgroundColor = .purple
         loadingView.alpha = 0.6
         loadingView.translatesAutoresizingMaskIntoConstraints = false;
         loadingView.addSubview(spinner)
-        //loadingView.backgroundColor = .purple
         tableView.addSubview(loadingView)
         
         loadingView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true

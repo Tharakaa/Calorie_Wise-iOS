@@ -7,6 +7,7 @@
 
 import UIKit
 
+// Used to pass into Category view to display details.
 struct Category {
     var id: String
     var name: String
@@ -16,6 +17,7 @@ struct Category {
     var minCalorie: Int
 }
 
+// Object structure sent by the backend
 struct CategoryDTO: Codable {
     var _id: String
     var name: String

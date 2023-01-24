@@ -7,6 +7,7 @@
 
 import UIKit
 
+// used to create the view
 struct Item {
     var _id: String?
     var name: String
@@ -22,6 +23,7 @@ struct Item {
     var calcium: Double
 }
 
+// Use to parse data sent by backend
 struct ItemDTO: Codable {
     var _id: String?
     var name: String

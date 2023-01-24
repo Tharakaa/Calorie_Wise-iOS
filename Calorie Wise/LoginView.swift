@@ -8,6 +8,7 @@
 import UIKit
 import Lottie
 
+// Login screen
 class LoginView: UIViewController {
     
     let usernameField = UITextField()
@@ -31,6 +32,7 @@ class LoginView: UIViewController {
         navigationController?.pushViewController(RegisterView(), animated: true)
     }
     
+    // validate input fields and shake invalid fields.
     @objc func loginClicked() {
         var isValid = true;
         if (!checkAndShake(field: usernameField)) {isValid = false}
@@ -67,20 +69,8 @@ class LoginView: UIViewController {
             child.view.removeFromSuperview()
             child.removeFromParent()
             if (result == 0) {
-                var animationView = LottieAnimationView()
-                animationView.translatesAutoresizingMaskIntoConstraints = false
-                animationView = .init(name: "42135-done")
-                animationView.frame = self.view.frame
-                animationView.backgroundColor = .systemGray3
-                animationView.contentMode = .scaleAspectFit
-                animationView.loopMode = .playOnce
-                animationView.animationSpeed = 0.8
-                
-                self.view.addSubview(animationView)
-                
-                animationView.play(completion: {_ in
-                    self.navigationController?.popToRootViewController(animated: true)
-                })
+                // on successful login go back to home
+                self.navigationController?.popToRootViewController(animated: true)
             } else if (result == 1) {
                 let alert = UIAlertController(title: "Alert", message: "Username or Password is incorrect. Please try again", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -89,6 +79,7 @@ class LoginView: UIViewController {
         }
     }
     
+    // Shake invalid fields
     func checkAndShake(field: UITextField) -> Bool {
         let fieldText = field.text
         if (fieldText == nil || fieldText!.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty) {
@@ -102,6 +93,7 @@ class LoginView: UIViewController {
         }
     }
     
+    // Set ui elements and set UI constaints
     func setupView() {
         view.backgroundColor = .systemBackground
         
@@ -128,9 +120,6 @@ class LoginView: UIViewController {
         loginCard.addSubview(passwordField)
         
         let loginButton = UIButton()
-//        loginButton.configuration = .filled()
-//        loginButton.configuration?.baseBackgroundColor = .systemBlue
-//        loginButton.configuration?.title = "Login"
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         loginButton.setTitle("Login", for: .normal)
         loginButton.backgroundColor = .systemBlue
@@ -143,11 +132,8 @@ class LoginView: UIViewController {
         let registerButton = UIButton()
         registerButton.setTitle("create an account", for: .normal)
         registerButton.setTitleColor(.systemBlue, for: .normal)
-        //registerButton.backgroundColor = .systemBlue
         registerButton.layer.cornerRadius = 6
         registerButton.frame = CGRect(x: 15, y: -50, width: 300, height: 500)
-//        registerButton.configuration = .borderless()
-//        registerButton.configuration?.title = "create an account"
         registerButton.translatesAutoresizingMaskIntoConstraints = false
         registerButton.addTarget(self, action: #selector(goToRegister), for: .touchUpInside)
         loginCard.addSubview(registerButton)
@@ -188,7 +174,6 @@ class LoginView: UIViewController {
 
 extension LoginView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        //Check if there is any other text-field in the view whose tag is +1 greater than the current text-field on which the return key was pressed. If yes → then move the cursor to that next text-field. If No → Dismiss the keyboard
         if let nextField = self.view.viewWithTag(textField.tag + 1) as? UITextField {
             nextField.becomeFirstResponder()
         } else {

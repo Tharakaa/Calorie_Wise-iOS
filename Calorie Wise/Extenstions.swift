@@ -7,6 +7,8 @@
 
 import UIKit
 
+// Extentions are used to implemet additional functionalities to existing classes.
+
 // Hide Keyboard when background or button is tapped
 extension UIViewController {
     func hideKeyboardWhenTappedAround() {
@@ -92,32 +94,32 @@ extension UIResponder {
 }
 
 extension UIView {
-
-  var safeTopAnchor: NSLayoutYAxisAnchor {
-    if #available(iOS 11.0, *) {
-      return safeAreaLayoutGuide.topAnchor
+    
+    var safeTopAnchor: NSLayoutYAxisAnchor {
+        if #available(iOS 11.0, *) {
+            return safeAreaLayoutGuide.topAnchor
+        }
+        return topAnchor
     }
-    return topAnchor
-  }
-
-  var safeLeftAnchor: NSLayoutXAxisAnchor {
-    if #available(iOS 11.0, *){
-      return safeAreaLayoutGuide.leftAnchor
+    
+    var safeLeftAnchor: NSLayoutXAxisAnchor {
+        if #available(iOS 11.0, *){
+            return safeAreaLayoutGuide.leftAnchor
+        }
+        return leftAnchor
     }
-    return leftAnchor
-  }
-
-  var safeRightAnchor: NSLayoutXAxisAnchor {
-    if #available(iOS 11.0, *){
-      return safeAreaLayoutGuide.rightAnchor
+    
+    var safeRightAnchor: NSLayoutXAxisAnchor {
+        if #available(iOS 11.0, *){
+            return safeAreaLayoutGuide.rightAnchor
+        }
+        return rightAnchor
     }
-    return rightAnchor
-  }
-
-  var safeBottomAnchor: NSLayoutYAxisAnchor {
-    if #available(iOS 11.0, *) {
-      return safeAreaLayoutGuide.bottomAnchor
+    
+    var safeBottomAnchor: NSLayoutYAxisAnchor {
+        if #available(iOS 11.0, *) {
+            return safeAreaLayoutGuide.bottomAnchor
+        }
+        return bottomAnchor
     }
-    return bottomAnchor
-  }
 }

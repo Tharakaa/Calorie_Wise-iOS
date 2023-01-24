@@ -8,6 +8,7 @@
 import UIKit
 import Lottie
 
+// Food item view
 class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     let label = UILabel()
@@ -16,7 +17,6 @@ class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDele
     let mainScore = UILabel();
     let badgeContainer = UIView()
     var animationView = LottieAnimationView()
-    //var imageObj = UIImage()
     var imageContainer = UIImageView()
     let container = UIView()
     var isBookMarked = false
@@ -79,6 +79,7 @@ class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDele
         navigationController?.pushViewController(LoginView(), animated: true)
     }
     
+    // Add bookmarks from list.
     @objc func bookmarkItem() {
         if (ApiCall.isLoggedIn()) {
             if (isBookMarked) {
@@ -102,6 +103,7 @@ class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDele
             }
             RecipeListView.needToRefresh = true;
             BookmarkListView.needToRefresh = true;
+            SearchListView.needToRefresh = true;
         } else {
             let refreshAlert = UIAlertController(title: "Alert", message: "Please login to save recipe", preferredStyle: .alert)
             refreshAlert.addAction(UIAlertAction(title: "Login", style: .default, handler: { (action: UIAlertAction!) in
@@ -112,6 +114,7 @@ class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDele
         }
     }
     
+    // Set UI items and set constaints.
     func setupView() {
         view.backgroundColor = .systemBackground
         
@@ -124,13 +127,11 @@ class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDele
         imageContainer.clipsToBounds = true
         
         label.translatesAutoresizingMaskIntoConstraints = false
-        //label.text = ""
         label.numberOfLines = 0
         label.font = UIFont.preferredFont(forTextStyle: .title1)
         label.adjustsFontForContentSizeCategory = true
         
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        //descriptionLabel.text = ""
         descriptionLabel.numberOfLines = 0
         descriptionLabel.font = UIFont.preferredFont(forTextStyle: .body)
         descriptionLabel.adjustsFontForContentSizeCategory = true
@@ -167,7 +168,6 @@ class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDele
         scrollView.addSubview(descriptionLabel)
         
         calorieLabel.translatesAutoresizingMaskIntoConstraints = false
-        //calorieLabel.text = "356 calories"
         calorieLabel.numberOfLines = 0
         calorieLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
         calorieLabel.adjustsFontForContentSizeCategory = true
@@ -179,7 +179,6 @@ class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDele
         fireView.clipsToBounds = true
         
         mainScore.translatesAutoresizingMaskIntoConstraints = false
-        //mainScore.text = "8"
         mainScore.numberOfLines = 0
         mainScore.font = label.font.withSize(22)
         
@@ -207,7 +206,6 @@ class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDele
         scrollView.addSubview(calorieContainer)
         
         badgeContainer.translatesAutoresizingMaskIntoConstraints = false
-        //badgeContainer.backgroundColor = .systemGreen
         badgeContainer.layer.cornerRadius = 10
         badgeContainer.addSubview(mainScore)
         badgeContainer.addSubview(scoreOutOf)
@@ -294,7 +292,6 @@ class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDele
             calorieContainer.leftAnchor.constraint(equalTo: label.leftAnchor, constant: -5),
             calorieContainer.bottomAnchor.constraint(equalTo: fireView.bottomAnchor, constant: 3),
             calorieContainer.rightAnchor.constraint(equalTo: calorieLabel.rightAnchor, constant: 5),
-            //calorieContainer.rightAnchor.constraint(equalTo: healthLabel.leftAnchor, constant: -10),
             calorieLabel.leftAnchor.constraint(equalTo: fireView.rightAnchor, constant: 3),
             calorieLabel.centerYAnchor.constraint(equalTo: calorieContainer.centerYAnchor),
             fireView.leftAnchor.constraint(equalTo: calorieContainer.leftAnchor, constant: 5),
@@ -304,10 +301,6 @@ class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDele
             descriptionLabel.widthAnchor.constraint(equalTo: container.widthAnchor, constant: -20),
             descriptionLabel.topAnchor.constraint(equalTo: calorieContainer.bottomAnchor, constant: 15),
             descriptionLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            
-//            nutrionTable.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor),
-            
-            //nutrionTable.bottomAnchor.constraint(equalTo: temp.topAnchor),
             
             nutrionLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 15),
             nutrionLabel.centerXAnchor.constraint(equalTo: descriptionLabel.centerXAnchor),
@@ -348,17 +341,11 @@ class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDele
 
 }
 
+// Nutrtion details table cell
 class NutriCell: UITableViewCell {
     
     let label = UILabel()
     let descriptionLabel = UILabel()
-    
-//    var recipe : Recipe? {
-//        didSet {
-//            descriptionLabel.text = recipe?.smallDescription
-//            label.text = recipe?.name
-//        }
-//    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

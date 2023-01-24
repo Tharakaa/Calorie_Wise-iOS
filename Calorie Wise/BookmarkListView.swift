@@ -8,6 +8,7 @@
 import UIKit
 import Lottie
 
+// Table view for disaplying saved items for a user.
 class BookmarkListView: UITableViewController, ListItemDelegate {
     
     let cellId = "favCellId"
@@ -18,30 +19,34 @@ class BookmarkListView: UITableViewController, ListItemDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        //navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.largeTitleDisplayMode = .never
         
+        // register cell class with unique id.
+        // This id is used to remove and reload table cells when necessary to conserve ram
         tableView.register(ListItemCell.self, forCellReuseIdentifier: cellId)
         tableView.delaysContentTouches = true
         tableView.showsVerticalScrollIndicator = true
-        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        tableView.separatorStyle = UITableViewCell.SeparatorStyle.singleLine
         tableView.dataSource = self
+        tableView.separatorInset = UIEdgeInsets.init(top: 0, left: 10, bottom: 0, right: 10)
         
         ApiCall.getBookmarkedForUser{ (recipes) in
             self.items = recipes ?? []
             self.tableView.reloadData()
-            RecipeListView.needToRefresh = false
+            BookmarkListView.needToRefresh = false
         }
     }
     
+    // Bookmarks can be set in details page. If changed a boolean flag is set
+    // notifying that the view needs to be reloaded.
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if (RecipeListView.needToRefresh) {
+        if (BookmarkListView.needToRefresh) {
             ApiCall.getBookmarkedForUser{ (recipes) in
                 self.items = recipes ?? []
                 self.tableView.reloadData()
-                RecipeListView.needToRefresh = false
+                BookmarkListView.needToRefresh = false
             }
         }
     }
@@ -50,7 +55,7 @@ class BookmarkListView: UITableViewController, ListItemDelegate {
         super.didReceiveMemoryWarning()
     }
     
-    
+    // Set cell items with received data. A seperate API request is sent to retrieve images.
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! ListItemCell
         let dto = self.items[indexPath.row]
@@ -75,17 +80,16 @@ class BookmarkListView: UITableViewController, ListItemDelegate {
         return (calcHeight < 130) ? 130 : calcHeight
     }
     
+    // set cell animations
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        // fetch the animation from the TableAnimation enum and initialze the TableViewAnimator class
         let guide = view.safeAreaLayoutGuide
         let height = guide.layoutFrame.size.height
         let animator = CellAnimator().getAnimator(rowHeight: (height/4 + 10), duration: 0.85, delayFactor: 0.03)
         animator.animate(cell: cell, at: indexPath, in: tableView)
     }
     
+    // Capture cell taps.
     func didPressCell(sender: Item){
-        print(sender)
-        
         let recipeDetailView = RecipeDetailView()
         recipeDetailView.item = sender
         navigationController?.pushViewController(recipeDetailView, animated: true)
@@ -105,7 +109,7 @@ class BookmarkListView: UITableViewController, ListItemDelegate {
         ApiCall.getBookmarkedForUser{ (recipes) in
             self.items = recipes ?? []
             self.tableView.reloadData()
-            RecipeListView.needToRefresh = false
+            BookmarkListView.needToRefresh = false
         }
     }
     

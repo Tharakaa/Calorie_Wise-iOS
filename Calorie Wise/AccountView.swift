@@ -7,6 +7,7 @@
 
 import UIKit
 
+// Account details view. Visible after login in.
 class AccountView: UIViewController {
 
     override func viewDidLoad() {
@@ -28,6 +29,7 @@ class AccountView: UIViewController {
     }
     
     @objc func logoutClicked() {
+        // Clear data when loggin out
         ApiCall.logout()
         self.navigationController?.popToRootViewController(animated: true)
     }
@@ -36,6 +38,7 @@ class AccountView: UIViewController {
         navigationController?.pushViewController(BookmarkListView(), animated: true)
     }
     
+    // setup UI elements and layout constraints.
     func setupView() {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -70,6 +73,7 @@ class AccountView: UIViewController {
         emailValue.adjustsFontForContentSizeCategory = true
         
         let bookmarkGesture: UITapGestureRecognizer!
+        // register tap gesture action to call methods.
         bookmarkGesture = UITapGestureRecognizer(target: self, action: #selector(goToBookmarks))
         
         let container = UIView();

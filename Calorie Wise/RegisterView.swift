@@ -28,6 +28,7 @@ class RegisterView: UIViewController {
         self.removeKeyboardObserver()
     }
     
+    // Validate inputs and shake invalid fields.
     @objc func registerClicked() {
         var isValid = true;
         if (!checkAndShake(field: nameField)) {isValid = false}
@@ -110,6 +111,7 @@ class RegisterView: UIViewController {
         }
     }
     
+    // Setup UI view and set constraints.
     func setupView() {
         view.backgroundColor = .systemBackground
         
@@ -154,9 +156,6 @@ class RegisterView: UIViewController {
         loginCard.addSubview(confPasswordField)
         
         let registerButton = UIButton()
-//        registerButton.configuration = .filled()
-//        registerButton.configuration?.baseBackgroundColor = .systemBlue
-//        registerButton.configuration?.title = "Register"
         registerButton.setTitle("Register", for: .normal)
         registerButton.backgroundColor = .systemBlue
         registerButton.layer.cornerRadius = 6
@@ -210,8 +209,8 @@ class RegisterView: UIViewController {
 }
 
 extension RegisterView: UITextFieldDelegate {
+    // Next button goes to the next field
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        //Check if there is any other text-field in the view whose tag is +1 greater than the current text-field on which the return key was pressed. If yes → then move the cursor to that next text-field. If No → Dismiss the keyboard
         if let nextField = self.view.viewWithTag(textField.tag + 1) as? UITextField {
             nextField.becomeFirstResponder()
         } else {

@@ -44,32 +44,41 @@ class AccountView: UIViewController {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.backgroundColor = .systemBackground
         
+        let personIcon = UIImage(systemName: "person.crop.circle")?.withTintColor(.systemBlue, renderingMode: .alwaysOriginal)
+        let personView = UIImageView(image: personIcon)
+        personView.translatesAutoresizingMaskIntoConstraints = false
+        personView.contentMode = .scaleAspectFit
+        
         let nameLabel = UILabel();
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.text = "Name"
+        nameLabel.textAlignment = .center
         nameLabel.numberOfLines = 0
-        nameLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        nameLabel.font = UIFont.preferredFont(forTextStyle: .callout)
         nameLabel.adjustsFontForContentSizeCategory = true
         
         let nameValue = UILabel();
         nameValue.translatesAutoresizingMaskIntoConstraints = false
         nameValue.text = ApiCall.user?.name
+        nameValue.textAlignment = .center
         nameValue.numberOfLines = 0
-        nameValue.font = UIFont.preferredFont(forTextStyle: .headline)
+        nameValue.font = UIFont.preferredFont(forTextStyle: .title2)
         nameValue.adjustsFontForContentSizeCategory = true
         
         let emailLabel = UILabel();
         emailLabel.translatesAutoresizingMaskIntoConstraints = false
         emailLabel.text = "Email"
+        emailLabel.textAlignment = .center
         emailLabel.numberOfLines = 0
-        emailLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        emailLabel.font = UIFont.preferredFont(forTextStyle: .callout)
         emailLabel.adjustsFontForContentSizeCategory = true
         
         let emailValue = UILabel();
         emailValue.translatesAutoresizingMaskIntoConstraints = false
         emailValue.text = ApiCall.user?.username
+        emailValue.textAlignment = .center
         emailValue.numberOfLines = 0
-        emailValue.font = UIFont.preferredFont(forTextStyle: .headline)
+        emailValue.font = UIFont.preferredFont(forTextStyle: .title2)
         emailValue.adjustsFontForContentSizeCategory = true
         
         let bookmarkGesture: UITapGestureRecognizer!
@@ -97,6 +106,7 @@ class AccountView: UIViewController {
         container.addSubview(bookmarksLabel)
         container.addSubview(imageView)
         
+        scrollView.addSubview(personView)
         scrollView.addSubview(nameLabel)
         scrollView.addSubview(nameValue)
         scrollView.addSubview(emailLabel)
@@ -111,8 +121,13 @@ class AccountView: UIViewController {
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
+            personView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 20),
+            personView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.2),
+            personView.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.12),
+            personView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            
             nameLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -35),
-            nameLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10),
+            nameLabel.topAnchor.constraint(equalTo: personView.bottomAnchor, constant: 20),
             nameLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             
             nameValue.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -35),

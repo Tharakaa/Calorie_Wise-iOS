@@ -18,8 +18,8 @@ class RegisterView: UIViewController {
         super.viewDidLoad()
         setupView()
         title = "Register"
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationItem.largeTitleDisplayMode = .never
         self.hideKeyboardWhenTappedAround()
         self.addKeyboardObserver()
     }
@@ -115,9 +115,16 @@ class RegisterView: UIViewController {
     func setupView() {
         view.backgroundColor = .systemBackground
         
-        let loginCard = UIView()
+        let loginCard = UIScrollView()
         loginCard.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(loginCard)
+        
+        let appName  = UILabel()
+        appName.translatesAutoresizingMaskIntoConstraints = false
+        appName.text = "CALORIE WISE"
+        appName.textAlignment = .center
+        appName.font = UIFont(name: "MarkerFelt-Wide", size: 40)
+        loginCard.addSubview(appName)
         
         nameField.translatesAutoresizingMaskIntoConstraints = false
         nameField.placeholder = "Name"
@@ -164,6 +171,15 @@ class RegisterView: UIViewController {
         registerButton.addTarget(self, action: #selector(registerClicked), for: .touchUpInside)
         loginCard.addSubview(registerButton)
         
+        let loginButton = UIButton()
+        loginButton.setTitle("already have an account", for: .normal)
+        loginButton.setTitleColor(.systemBlue, for: .normal)
+        loginButton.layer.cornerRadius = 6
+        loginButton.frame = CGRect(x: 15, y: -50, width: 300, height: 500)
+        loginButton.translatesAutoresizingMaskIntoConstraints = false
+        loginButton.addTarget(self, action: #selector(goToLogin), for: .touchUpInside)
+        loginCard.addSubview(loginButton)
+        
         nameField.delegate = self
         usernameField.delegate = self
         passwordField.delegate = self
@@ -174,38 +190,53 @@ class RegisterView: UIViewController {
         confPasswordField.tag = 4
         
         NSLayoutConstraint.activate([
+            
             loginCard.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             loginCard.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            loginCard.heightAnchor.constraint(equalToConstant: 320),
-            loginCard.widthAnchor.constraint(equalToConstant: 320),
+            loginCard.topAnchor.constraint(equalTo: view.topAnchor),
+            loginCard.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            loginCard.widthAnchor.constraint(equalTo: view.widthAnchor),
+            
+            appName.heightAnchor.constraint(equalToConstant: 50),
+            appName.widthAnchor.constraint(equalTo: view.widthAnchor),
+            appName.topAnchor.constraint(equalTo: loginCard.topAnchor, constant: 50),
             
             nameField.heightAnchor.constraint(equalToConstant: 50),
-            nameField.widthAnchor.constraint(equalTo: loginCard.widthAnchor),
-            nameField.centerYAnchor.constraint(equalTo: loginCard.centerYAnchor, constant: -125),
-            nameField.centerXAnchor.constraint(equalTo: loginCard.centerXAnchor),
+            nameField.widthAnchor.constraint(equalTo: loginCard.widthAnchor, multiplier: 0.85),
+            nameField.topAnchor.constraint(equalTo: appName.bottomAnchor, constant: 30),
+            nameField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             usernameField.heightAnchor.constraint(equalToConstant: 50),
-            usernameField.widthAnchor.constraint(equalTo: loginCard.widthAnchor),
+            usernameField.widthAnchor.constraint(equalTo: loginCard.widthAnchor, multiplier: 0.85),
             usernameField.topAnchor.constraint(equalTo: nameField.bottomAnchor, constant: 10),
-            usernameField.centerXAnchor.constraint(equalTo: loginCard.centerXAnchor),
+            usernameField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             passwordField.heightAnchor.constraint(equalToConstant: 50),
-            passwordField.widthAnchor.constraint(equalTo: loginCard.widthAnchor),
+            passwordField.widthAnchor.constraint(equalTo: loginCard.widthAnchor, multiplier: 0.85),
             passwordField.topAnchor.constraint(equalTo: usernameField.bottomAnchor, constant: 10),
-            passwordField.centerXAnchor.constraint(equalTo: loginCard.centerXAnchor),
+            passwordField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             confPasswordField.heightAnchor.constraint(equalToConstant: 50),
-            confPasswordField.widthAnchor.constraint(equalTo: loginCard.widthAnchor),
+            confPasswordField.widthAnchor.constraint(equalTo: loginCard.widthAnchor, multiplier: 0.85),
             confPasswordField.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 10),
-            confPasswordField.centerXAnchor.constraint(equalTo: loginCard.centerXAnchor),
+            confPasswordField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            registerButton.widthAnchor.constraint(equalTo: loginCard.widthAnchor, multiplier: 0.9),
+            registerButton.widthAnchor.constraint(equalTo: loginCard.widthAnchor, multiplier: 0.85),
             registerButton.heightAnchor.constraint(equalToConstant: 45),
             registerButton.topAnchor.constraint(equalTo: confPasswordField.bottomAnchor, constant: 30),
-            registerButton.centerXAnchor.constraint(equalTo: loginCard.centerXAnchor),
+            registerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            loginButton.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 5),
+            loginButton.widthAnchor.constraint(equalTo: loginCard.widthAnchor, multiplier: 0.85),
+            loginButton.bottomAnchor.constraint(equalTo: loginCard.bottomAnchor, constant: -20),
+            loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
     }
 
+    @objc func goToLogin() {
+        navigationController?.popViewController(animated: true)
+    }
+    
 }
 
 extension RegisterView: UITextFieldDelegate {

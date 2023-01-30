@@ -18,8 +18,8 @@ class LoginView: UIViewController {
         super.viewDidLoad()
         setupView()
         title = "Login"
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationItem.largeTitleDisplayMode = .never
         self.hideKeyboardWhenTappedAround()
         self.addKeyboardObserver()
     }
@@ -97,9 +97,20 @@ class LoginView: UIViewController {
     func setupView() {
         view.backgroundColor = .systemBackground
         
+        let loginCardContainer = UIView()
+        loginCardContainer.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(loginCardContainer)
+        
         let loginCard = UIView()
         loginCard.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(loginCard)
+        loginCardContainer.addSubview(loginCard)
+        
+        let appName  = UILabel()
+        appName.translatesAutoresizingMaskIntoConstraints = false
+        appName.text = "CALORIE WISE"
+        appName.textAlignment = .center
+        appName.font = UIFont(name: "MarkerFelt-Wide", size: 40)
+        view.addSubview(appName)
         
         usernameField.translatesAutoresizingMaskIntoConstraints = false
         usernameField.placeholder = "Email"
@@ -144,29 +155,33 @@ class LoginView: UIViewController {
         passwordField.tag = 2
         
         NSLayoutConstraint.activate([
+            loginCardContainer.topAnchor.constraint(equalTo: appName.bottomAnchor),
+            loginCardContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            loginCardContainer.widthAnchor.constraint(equalTo: view.widthAnchor),
+            
             loginCard.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loginCard.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            loginCard.heightAnchor.constraint(equalToConstant: 250),
-            loginCard.widthAnchor.constraint(equalToConstant: 320),
+            loginCard.centerYAnchor.constraint(equalTo: loginCardContainer.centerYAnchor),
+            loginCard.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.85),
+            
+            appName.heightAnchor.constraint(equalToConstant: 50),
+            appName.widthAnchor.constraint(equalTo: view.widthAnchor),
+            appName.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
             
             usernameField.heightAnchor.constraint(equalToConstant: 50),
             usernameField.widthAnchor.constraint(equalTo: loginCard.widthAnchor),
-            usernameField.centerYAnchor.constraint(equalTo: loginCard.centerYAnchor, constant: -80),
-            usernameField.centerXAnchor.constraint(equalTo: loginCard.centerXAnchor),
+            usernameField.topAnchor.constraint(equalTo: loginCard.topAnchor),
             
             passwordField.heightAnchor.constraint(equalToConstant: 50),
             passwordField.widthAnchor.constraint(equalTo: loginCard.widthAnchor),
             passwordField.topAnchor.constraint(equalTo: usernameField.bottomAnchor, constant: 10),
-            passwordField.centerXAnchor.constraint(equalTo: loginCard.centerXAnchor),
             
-            loginButton.widthAnchor.constraint(equalTo: loginCard.widthAnchor, multiplier: 0.9),
+            loginButton.widthAnchor.constraint(equalTo: loginCard.widthAnchor),
             loginButton.heightAnchor.constraint(equalToConstant: 45),
             loginButton.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 30),
-            loginButton.centerXAnchor.constraint(equalTo: loginCard.centerXAnchor),
             
-            registerButton.widthAnchor.constraint(equalTo: loginCard.widthAnchor, multiplier: 0.9),
+            registerButton.widthAnchor.constraint(equalTo: loginCard.widthAnchor),
             registerButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 5),
-            registerButton.centerXAnchor.constraint(equalTo: loginCard.centerXAnchor)
+            registerButton.bottomAnchor.constraint(equalTo: loginCard.bottomAnchor)
         ])
     }
     

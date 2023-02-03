@@ -27,7 +27,6 @@
 		E68FBE50296F53870052C45E /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE4E296F53870052C45E /* CategoryCell.swift */; };
 		E68FBE54296F53920052C45E /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE51296F53920052C45E /* Category.swift */; };
 		E68FBE55296F53920052C45E /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE52296F53920052C45E /* Item.swift */; };
-		E68FBE56296F53920052C45E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE53296F53920052C45E /* User.swift */; };
 		E68FBE59296F539E0052C45E /* CellAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE57296F539E0052C45E /* CellAnimator.swift */; };
 		E68FBE5A296F539E0052C45E /* ApiCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE58296F539E0052C45E /* ApiCall.swift */; };
 		E68FBE5D296F53E40052C45E /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = E68FBE5C296F53E40052C45E /* Lottie */; };
@@ -56,7 +55,6 @@
 		E68FBE4E296F53870052C45E /* CategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		E68FBE51296F53920052C45E /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		E68FBE52296F53920052C45E /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
-		E68FBE53296F53920052C45E /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E68FBE57296F539E0052C45E /* CellAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellAnimator.swift; sourceTree = "<group>"; };
 		E68FBE58296F539E0052C45E /* ApiCall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCall.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -163,7 +161,6 @@
 			children = (
 				E68FBE51296F53920052C45E /* Category.swift */,
 				E68FBE52296F53920052C45E /* Item.swift */,
-				E68FBE53296F53920052C45E /* User.swift */,
 			);
 			path = modal;
 			sourceTree = "<group>";
@@ -251,7 +248,6 @@
 				E68FBE4A296F537B0052C45E /* RegisterView.swift in Sources */,
 				E68FBE44296F537B0052C45E /* AccountView.swift in Sources */,
 				E68FBE47296F537B0052C45E /* RecipeDetailView.swift in Sources */,
-				E68FBE56296F53920052C45E /* User.swift in Sources */,
 				E68FBE1C296F521B0052C45E /* AppDelegate.swift in Sources */,
 				E68FBE45296F537B0052C45E /* RecipeListView.swift in Sources */,
 				E68FBE59296F539E0052C45E /* CellAnimator.swift in Sources */,

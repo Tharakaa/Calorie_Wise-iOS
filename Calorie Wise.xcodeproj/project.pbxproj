@@ -30,6 +30,7 @@
 		E68FBE59296F539E0052C45E /* CellAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE57296F539E0052C45E /* CellAnimator.swift */; };
 		E68FBE5A296F539E0052C45E /* ApiCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE58296F539E0052C45E /* ApiCall.swift */; };
 		E68FBE5D296F53E40052C45E /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = E68FBE5C296F53E40052C45E /* Lottie */; };
+		E6ED9CE6298D7956009D4388 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ED9CE5298D7956009D4388 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,7 @@
 		E68FBE52296F53920052C45E /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		E68FBE57296F539E0052C45E /* CellAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellAnimator.swift; sourceTree = "<group>"; };
 		E68FBE58296F539E0052C45E /* ApiCall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCall.swift; sourceTree = "<group>"; };
+		E6ED9CE5298D7956009D4388 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +163,7 @@
 			children = (
 				E68FBE51296F53920052C45E /* Category.swift */,
 				E68FBE52296F53920052C45E /* Item.swift */,
+				E6ED9CE5298D7956009D4388 /* User.swift */,
 			);
 			path = modal;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				E68FBE4F296F53870052C45E /* ListItemCell.swift in Sources */,
 				E68FBE1E296F521B0052C45E /* SceneDelegate.swift in Sources */,
 				E68FBE49296F537B0052C45E /* LoginView.swift in Sources */,
+				E6ED9CE6298D7956009D4388 /* User.swift in Sources */,
 				E68FBE46296F537B0052C45E /* SearchListView.swift in Sources */,
 				E68FBE5A296F539E0052C45E /* ApiCall.swift in Sources */,
 				E68FBE54296F53920052C45E /* Category.swift in Sources */,

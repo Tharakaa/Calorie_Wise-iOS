@@ -121,6 +121,7 @@ class RegisterView: UIViewController {
         view.backgroundColor = .systemBackground
         
         let loginCardContainer = UIScrollView()
+        loginCardContainer.showsVerticalScrollIndicator = false
         loginCardContainer.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(loginCardContainer)
         
@@ -214,32 +215,32 @@ class RegisterView: UIViewController {
             logo.topAnchor.constraint(equalTo: loginCard.topAnchor),
             
             nameField.heightAnchor.constraint(equalToConstant: 50),
-            nameField.widthAnchor.constraint(equalTo: loginCard.widthAnchor, multiplier: 0.85),
+            nameField.widthAnchor.constraint(equalTo: loginCard.widthAnchor),
             nameField.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 30),
             nameField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             usernameField.heightAnchor.constraint(equalToConstant: 50),
-            usernameField.widthAnchor.constraint(equalTo: loginCard.widthAnchor, multiplier: 0.85),
+            usernameField.widthAnchor.constraint(equalTo: loginCard.widthAnchor),
             usernameField.topAnchor.constraint(equalTo: nameField.bottomAnchor, constant: 10),
             usernameField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             passwordField.heightAnchor.constraint(equalToConstant: 50),
-            passwordField.widthAnchor.constraint(equalTo: loginCard.widthAnchor, multiplier: 0.85),
+            passwordField.widthAnchor.constraint(equalTo: loginCard.widthAnchor),
             passwordField.topAnchor.constraint(equalTo: usernameField.bottomAnchor, constant: 10),
             passwordField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             confPasswordField.heightAnchor.constraint(equalToConstant: 50),
-            confPasswordField.widthAnchor.constraint(equalTo: loginCard.widthAnchor, multiplier: 0.85),
+            confPasswordField.widthAnchor.constraint(equalTo: loginCard.widthAnchor),
             confPasswordField.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 10),
             confPasswordField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            registerButton.widthAnchor.constraint(equalTo: loginCard.widthAnchor, multiplier: 0.85),
+            registerButton.widthAnchor.constraint(equalTo: loginCard.widthAnchor),
             registerButton.heightAnchor.constraint(equalToConstant: 45),
             registerButton.topAnchor.constraint(equalTo: confPasswordField.bottomAnchor, constant: 30),
             registerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             loginButton.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 5),
-            loginButton.widthAnchor.constraint(equalTo: loginCard.widthAnchor, multiplier: 0.85),
+            loginButton.widthAnchor.constraint(equalTo: loginCard.widthAnchor),
             loginButton.bottomAnchor.constraint(equalTo: loginCard.bottomAnchor, constant: -20),
             loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])

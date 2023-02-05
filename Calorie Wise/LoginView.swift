@@ -103,6 +103,7 @@ class LoginView: UIViewController {
         view.backgroundColor = .systemBackground
         
         let loginCardContainer = UIScrollView()
+        loginCardContainer.showsVerticalScrollIndicator = false
         loginCardContainer.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(loginCardContainer)
         
@@ -187,7 +188,7 @@ class LoginView: UIViewController {
             
             registerButton.widthAnchor.constraint(equalTo: loginCard.widthAnchor),
             registerButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 5),
-            registerButton.bottomAnchor.constraint(equalTo: loginCard.bottomAnchor)
+            registerButton.bottomAnchor.constraint(equalTo: loginCard.bottomAnchor, constant: -20)
         ])
     }
     

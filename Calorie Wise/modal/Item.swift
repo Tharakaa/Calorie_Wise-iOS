@@ -1,6 +1,6 @@
 //
 //  Recipe.swift
-//  Cook Book
+//  Calorie Wise
 //
 //  Created by Tharaka Gamachchi on 2023-01-02.
 //
@@ -21,6 +21,7 @@ struct Item {
     var carbohydrate: Double
     var fiber: Double
     var calcium: Double
+    var ingredients: [IngredientItem]
 }
 
 // Use to parse data sent by backend
@@ -37,4 +38,10 @@ struct ItemDTO: Codable {
     var carbohydrate: Double
     var fiber: Double
     var calcium: Double
+    var ingredients: [IngredientItem]
+}
+
+struct IngredientItem: Codable {
+    var name: String
+    var quantity: String
 }

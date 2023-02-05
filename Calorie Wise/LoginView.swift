@@ -1,6 +1,6 @@
 //
 //  LoginView.swift
-//  Cook Book
+//  Calorie Wise
 //
 //  Created by Tharaka Gamachchi on 2023-01-01.
 //
@@ -68,6 +68,11 @@ class LoginView: UIViewController {
             child.willMove(toParent: nil)
             child.view.removeFromSuperview()
             child.removeFromParent()
+            if (result == nil) {
+                let errorAlert = UIAlertController(title: "Alert", message: "Error occurred when loggin in", preferredStyle: .alert)
+                errorAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                self.present(errorAlert, animated: true, completion: nil)
+            }
             if (result == 0) {
                 // on successful login go back to home
                 self.navigationController?.popToRootViewController(animated: true)
@@ -97,7 +102,7 @@ class LoginView: UIViewController {
     func setupView() {
         view.backgroundColor = .systemBackground
         
-        let loginCardContainer = UIView()
+        let loginCardContainer = UIScrollView()
         loginCardContainer.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(loginCardContainer)
         
@@ -105,12 +110,10 @@ class LoginView: UIViewController {
         loginCard.translatesAutoresizingMaskIntoConstraints = false
         loginCardContainer.addSubview(loginCard)
         
-        let appName  = UILabel()
-        appName.translatesAutoresizingMaskIntoConstraints = false
-        appName.text = "CALORIE WISE"
-        appName.textAlignment = .center
-        appName.font = UIFont(name: "MarkerFelt-Wide", size: 40)
-        view.addSubview(appName)
+        let logo = UIImageView(image: UIImage(named: "calorie_wise_logo"))
+        logo.contentMode = .scaleAspectFill
+        logo.translatesAutoresizingMaskIntoConstraints = false
+        loginCard.addSubview(logo)
         
         usernameField.translatesAutoresizingMaskIntoConstraints = false
         usernameField.placeholder = "Email"
@@ -155,21 +158,24 @@ class LoginView: UIViewController {
         passwordField.tag = 2
         
         NSLayoutConstraint.activate([
-            loginCardContainer.topAnchor.constraint(equalTo: appName.bottomAnchor),
+            loginCardContainer.topAnchor.constraint(equalTo: view.safeTopAnchor),
             loginCardContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            loginCardContainer.widthAnchor.constraint(equalTo: view.widthAnchor),
+            loginCardContainer.leftAnchor.constraint(equalTo: view.safeLeftAnchor),
+            loginCardContainer.rightAnchor.constraint(equalTo: view.safeRightAnchor),
             
             loginCard.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             loginCard.centerYAnchor.constraint(equalTo: loginCardContainer.centerYAnchor),
             loginCard.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.85),
+            loginCard.bottomAnchor.constraint(equalTo: loginCardContainer.bottomAnchor),
             
-            appName.heightAnchor.constraint(equalToConstant: 50),
-            appName.widthAnchor.constraint(equalTo: view.widthAnchor),
-            appName.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
+            logo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            logo.widthAnchor.constraint(equalToConstant: 100),
+            logo.heightAnchor.constraint(equalToConstant: 100),
+            logo.topAnchor.constraint(equalTo: loginCard.topAnchor),
             
             usernameField.heightAnchor.constraint(equalToConstant: 50),
             usernameField.widthAnchor.constraint(equalTo: loginCard.widthAnchor),
-            usernameField.topAnchor.constraint(equalTo: loginCard.topAnchor),
+            usernameField.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 100),
             
             passwordField.heightAnchor.constraint(equalToConstant: 50),
             passwordField.widthAnchor.constraint(equalTo: loginCard.widthAnchor),

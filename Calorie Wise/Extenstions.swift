@@ -1,6 +1,6 @@
 //
 //  extenstions.swift
-//  Cook Book
+//  Calorie Wise
 //
 //  Created by Tharaka Gamachchi on 2023-01-01.
 //

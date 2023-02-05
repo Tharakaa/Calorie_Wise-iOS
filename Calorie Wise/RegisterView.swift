@@ -1,6 +1,6 @@
 //
 //  RegisterView.swift
-//  Cook Book
+//  Calorie Wise
 //
 //  Created by Tharaka Gamachchi on 2023-01-01.
 //
@@ -84,6 +84,11 @@ class RegisterView: UIViewController {
             child.view.removeFromSuperview()
             child.removeFromParent()
             
+            if (result == nil) {
+                let errorAlert = UIAlertController(title: "Alert", message: "Error occurred when registering", preferredStyle: .alert)
+                errorAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                self.present(errorAlert, animated: true, completion: nil)
+            }
             if (result == 0) {
                 let alert = UIAlertController(title: "Alert", message: "Account successfully created. Please login", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
@@ -115,16 +120,18 @@ class RegisterView: UIViewController {
     func setupView() {
         view.backgroundColor = .systemBackground
         
-        let loginCard = UIScrollView()
-        loginCard.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(loginCard)
+        let loginCardContainer = UIScrollView()
+        loginCardContainer.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(loginCardContainer)
         
-        let appName  = UILabel()
-        appName.translatesAutoresizingMaskIntoConstraints = false
-        appName.text = "CALORIE WISE"
-        appName.textAlignment = .center
-        appName.font = UIFont(name: "MarkerFelt-Wide", size: 40)
-        loginCard.addSubview(appName)
+        let loginCard = UIView()
+        loginCard.translatesAutoresizingMaskIntoConstraints = false
+        loginCardContainer.addSubview(loginCard)
+        
+        let logo = UIImageView(image: UIImage(named: "calorie_wise_logo"))
+        logo.contentMode = .scaleAspectFill
+        logo.translatesAutoresizingMaskIntoConstraints = false
+        loginCard.addSubview(logo)
         
         nameField.translatesAutoresizingMaskIntoConstraints = false
         nameField.placeholder = "Name"
@@ -191,19 +198,24 @@ class RegisterView: UIViewController {
         
         NSLayoutConstraint.activate([
             
-            loginCard.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loginCard.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            loginCard.topAnchor.constraint(equalTo: view.topAnchor),
-            loginCard.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            loginCard.widthAnchor.constraint(equalTo: view.widthAnchor),
+            loginCardContainer.topAnchor.constraint(equalTo: view.safeTopAnchor),
+            loginCardContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            loginCardContainer.leftAnchor.constraint(equalTo: view.safeLeftAnchor),
+            loginCardContainer.rightAnchor.constraint(equalTo: view.safeRightAnchor),
             
-            appName.heightAnchor.constraint(equalToConstant: 50),
-            appName.widthAnchor.constraint(equalTo: view.widthAnchor),
-            appName.topAnchor.constraint(equalTo: loginCard.topAnchor, constant: 50),
+            loginCard.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loginCard.centerYAnchor.constraint(equalTo: loginCardContainer.centerYAnchor),
+            loginCard.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.85),
+            loginCard.bottomAnchor.constraint(equalTo: loginCardContainer.bottomAnchor),
+            
+            logo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            logo.widthAnchor.constraint(equalToConstant: 100),
+            logo.heightAnchor.constraint(equalToConstant: 100),
+            logo.topAnchor.constraint(equalTo: loginCard.topAnchor),
             
             nameField.heightAnchor.constraint(equalToConstant: 50),
             nameField.widthAnchor.constraint(equalTo: loginCard.widthAnchor, multiplier: 0.85),
-            nameField.topAnchor.constraint(equalTo: appName.bottomAnchor, constant: 30),
+            nameField.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 30),
             nameField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             usernameField.heightAnchor.constraint(equalToConstant: 50),

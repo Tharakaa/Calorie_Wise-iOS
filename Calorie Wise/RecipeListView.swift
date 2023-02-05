@@ -1,6 +1,6 @@
 //
 //  RecipeListView.swift
-//  Cook Book
+//  Calorie Wise
 //
 //  Created by Tharaka Gamachchi on 2023-01-02.
 //
@@ -31,7 +31,7 @@ class RecipeListView: UITableViewController, ListItemDelegate {
         
         // Change user icon if logged in
         if (ApiCall.isLoggedIn()) {
-            let loginButton = UIBarButtonItem(image: UIImage(systemName: "person.badge.shield.checkmark.fill"), style: .plain, target: self, action: #selector(goToAccount))
+            let loginButton = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle.fill.badge.checkmark"), style: .plain, target: self, action: #selector(goToAccount))
             self.navigationItem.rightBarButtonItem  = loginButton
         } else {
             let loginButton = UIBarButtonItem(image: UIImage(systemName: "person.badge.plus"), style: .plain, target: self, action: #selector(goToLogin))
@@ -39,6 +39,11 @@ class RecipeListView: UITableViewController, ListItemDelegate {
         }
         
         ApiCall.fetchRecipesForCategory(minCal: minCalorie, maxCal: maxCalorie){ (recipes) in
+            if (recipes == nil) {
+                let errorAlert = UIAlertController(title: "Alert", message: "Error occurred when retrieving data", preferredStyle: .alert)
+                errorAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                self.present(errorAlert, animated: true, completion: nil)
+            }
             self.recipes = recipes ?? []
             self.tableView.reloadData()
             RecipeListView.needToRefresh = false
@@ -48,7 +53,7 @@ class RecipeListView: UITableViewController, ListItemDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if (ApiCall.isLoggedIn()) {
-            let loginButton = UIBarButtonItem(image: UIImage(systemName: "person.badge.shield.checkmark.fill"), style: .plain, target: self, action: #selector(goToAccount))
+            let loginButton = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle.fill.badge.checkmark"), style: .plain, target: self, action: #selector(goToAccount))
             self.navigationItem.rightBarButtonItem  = loginButton
         } else {
             let loginButton = UIBarButtonItem(image: UIImage(systemName: "person.badge.plus"), style: .plain, target: self, action: #selector(goToLogin))
@@ -57,6 +62,11 @@ class RecipeListView: UITableViewController, ListItemDelegate {
         
         if (RecipeListView.needToRefresh) {
             ApiCall.fetchRecipesForCategory(minCal: minCalorie, maxCal: maxCalorie){ (recipes) in
+                if (recipes == nil) {
+                    let errorAlert = UIAlertController(title: "Alert", message: "Error occurred when retrieving data", preferredStyle: .alert)
+                    errorAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                    self.present(errorAlert, animated: true, completion: nil)
+                }
                 self.recipes = recipes ?? []
                 self.tableView.reloadData()
                 RecipeListView.needToRefresh = false
@@ -72,11 +82,11 @@ class RecipeListView: UITableViewController, ListItemDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! ListItemCell
         let dto = self.recipes[indexPath.row]
-        let image = (UIImage(systemName: "carrot")?.withTintColor(.systemGray, renderingMode: .alwaysOriginal))!
+        let image = (UIImage(systemName: "leaf")?.withTintColor(.systemGray, renderingMode: .alwaysOriginal))!
         ApiCall.fetchProductImage(path: dto.imagePath){ (newImage) in
-            cell.item = Item(_id: dto._id, name: dto.name, description: dto.description, image: newImage, isBookMarked: dto.isBookMarked, score: dto.score, calorie: dto.calorie, protein: dto.protein, fat: dto.fat, carbohydrate: dto.carbohydrate, fiber: dto.fiber, calcium: dto.calcium)
+            cell.item = Item(_id: dto._id, name: dto.name, description: dto.description, image: newImage, isBookMarked: dto.isBookMarked, score: dto.score, calorie: dto.calorie, protein: dto.protein, fat: dto.fat, carbohydrate: dto.carbohydrate, fiber: dto.fiber, calcium: dto.calcium, ingredients: dto.ingredients)
         }
-        cell.item = Item(_id: dto._id, name: dto.name, description: dto.description, image: image, isBookMarked: dto.isBookMarked, score: dto.score, calorie: dto.calorie, protein: dto.protein, fat: dto.fat, carbohydrate: dto.carbohydrate, fiber: dto.fiber, calcium: dto.calcium)
+        cell.item = Item(_id: dto._id, name: dto.name, description: dto.description, image: image, isBookMarked: dto.isBookMarked, score: dto.score, calorie: dto.calorie, protein: dto.protein, fat: dto.fat, carbohydrate: dto.carbohydrate, fiber: dto.fiber, calcium: dto.calcium, ingredients: dto.ingredients)
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
         cell.delegate = self
         return cell
@@ -108,7 +118,7 @@ class RecipeListView: UITableViewController, ListItemDelegate {
     }
     
     func goToLoginPress(){
-        let refreshAlert = UIAlertController(title: "Alert", message: "Please login to save recipe", preferredStyle: .alert)
+        let refreshAlert = UIAlertController(title: "Alert", message: "Please login to add favourite", preferredStyle: .alert)
         refreshAlert.addAction(UIAlertAction(title: "Login", style: .default, handler: { (action: UIAlertAction!) in
             self.navigationController?.pushViewController(LoginView(), animated: true)
         }))

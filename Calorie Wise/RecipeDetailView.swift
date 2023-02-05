@@ -1,6 +1,6 @@
 //
 //  RecipeDetailView.swift
-//  Cook Book
+//  Calorie Wise
 //
 //  Created by Tharaka Gamachchi on 2023-01-03.
 //
@@ -88,7 +88,7 @@ class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDele
                     self.isBookMarked = false
                     self.animationView.currentProgress = 0
                     ApiCall.removeBookmark(item: self.item!._id!){ () in
-                        self.showToast(message: "Save Removed", font: .systemFont(ofSize: 12.0))
+                        self.showToast(message: "Removed from Favourites", font: .systemFont(ofSize: 12.0))
                     }
                 })
             } else {
@@ -97,7 +97,7 @@ class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDele
                     self.isBookMarked = true
                     self.animationView.currentProgress = 1
                     ApiCall.addBookmark(item: self.item!._id!){ () in
-                        self.showToast(message: "Recipe Saved", font: .systemFont(ofSize: 12.0))
+                        self.showToast(message: "Added to Favourites", font: .systemFont(ofSize: 12.0))
                     }
                 })
             }
@@ -105,7 +105,7 @@ class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDele
             BookmarkListView.needToRefresh = true;
             SearchListView.needToRefresh = true;
         } else {
-            let refreshAlert = UIAlertController(title: "Alert", message: "Please login to save recipe", preferredStyle: .alert)
+            let refreshAlert = UIAlertController(title: "Alert", message: "Please login to add favourite", preferredStyle: .alert)
             refreshAlert.addAction(UIAlertAction(title: "Login", style: .default, handler: { (action: UIAlertAction!) in
                 self.navigationController?.pushViewController(LoginView(), animated: true)
             }))
@@ -229,6 +229,7 @@ class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDele
         
         // Table view
         let nutrionTable = UITableView()
+        nutrionTable.tag = 1
         nutrionTable.showsVerticalScrollIndicator = true
         nutrionTable.separatorStyle = UITableViewCell.SeparatorStyle.singleLine
         nutrionTable.separatorStyle = UITableViewCell.SeparatorStyle.singleLine
@@ -240,12 +241,34 @@ class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDele
         nutrionTable.rowHeight = 45
         scrollView.addSubview(nutrionTable)
         
-        let temp = UILabel();
-        temp.text = "Details are based on taste.com.au"
-        temp.font = UIFont.preferredFont(forTextStyle: .footnote)
-        temp.translatesAutoresizingMaskIntoConstraints = false;
-        temp.textAlignment = .center
-        scrollView.addSubview(temp)
+        let ingredLabel = UILabel()
+        ingredLabel.translatesAutoresizingMaskIntoConstraints = false
+        ingredLabel.text = "Ingredients"
+        ingredLabel.numberOfLines = 0
+        ingredLabel.font = .boldSystemFont(ofSize: 22)
+        ingredLabel.adjustsFontForContentSizeCategory = true
+        scrollView.addSubview(ingredLabel)
+        
+        // Ingredient Table view
+        let ingredTable = UITableView()
+        ingredTable.tag = 2
+        ingredTable.showsVerticalScrollIndicator = true
+        ingredTable.separatorStyle = UITableViewCell.SeparatorStyle.singleLine
+        ingredTable.separatorStyle = UITableViewCell.SeparatorStyle.singleLine
+        ingredTable.dataSource = self
+        ingredTable.separatorInset = UIEdgeInsets.init(top: 0, left: 15, bottom: 0, right: 15)
+        ingredTable.register(NutriCell.self, forCellReuseIdentifier: "ingredCell")
+        ingredTable.translatesAutoresizingMaskIntoConstraints = false;
+        ingredTable.isScrollEnabled = false
+        ingredTable.rowHeight = 45
+        scrollView.addSubview(ingredTable)
+        
+        let referenceLabel = UILabel();
+        referenceLabel.text = "Details are based on taste.com.au"
+        referenceLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
+        referenceLabel.translatesAutoresizingMaskIntoConstraints = false;
+        referenceLabel.textAlignment = .center
+        scrollView.addSubview(referenceLabel)
         
         view.addSubview(scrollView)
         
@@ -313,30 +336,44 @@ class RecipeDetailView: UIViewController, UITableViewDataSource, UITableViewDele
             nutrionTable.rightAnchor.constraint(equalTo: descriptionLabel.rightAnchor),
             nutrionTable.heightAnchor.constraint(equalToConstant: 280),
             
-            temp.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -15),
-            temp.topAnchor.constraint(equalTo: nutrionTable.bottomAnchor),
-            temp.leftAnchor.constraint(equalTo: nutrionTable.leftAnchor),
-            temp.rightAnchor.constraint(equalTo: nutrionTable.rightAnchor),
-            temp.centerXAnchor.constraint(equalTo: nutrionTable.centerXAnchor)
+            ingredLabel.topAnchor.constraint(equalTo: nutrionTable.bottomAnchor, constant: 15),
+            ingredLabel.centerXAnchor.constraint(equalTo: descriptionLabel.centerXAnchor),
+            
+            ingredTable.topAnchor.constraint(equalTo: ingredLabel.bottomAnchor, constant: 5),
+            ingredTable.leftAnchor.constraint(equalTo: descriptionLabel.leftAnchor),
+            ingredTable.rightAnchor.constraint(equalTo: descriptionLabel.rightAnchor),
+            ingredTable.heightAnchor.constraint(equalToConstant: CGFloat(((item?.ingredients.count ?? 0) * 45) + 10)),
+            
+            referenceLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -15),
+            referenceLabel.topAnchor.constraint(equalTo: ingredTable.bottomAnchor),
+            referenceLabel.leftAnchor.constraint(equalTo: ingredTable.leftAnchor),
+            referenceLabel.rightAnchor.constraint(equalTo: ingredTable.rightAnchor),
+            referenceLabel.centerXAnchor.constraint(equalTo: ingredTable.centerXAnchor)
             
         ])
     }
     
-    @objc func goToAccount() {
-        navigationController?.pushViewController(AccountView(), animated: true)
-    }
-    
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "nutriCell", for: indexPath) as! NutriCell
+        let cell:NutriCell
+        if (tableView.tag == 1) {
+            cell = tableView.dequeueReusableCell(withIdentifier: "nutriCell", for: indexPath) as! NutriCell
+            cell.label.text = nutriDataLabel[indexPath.row]
+            cell.descriptionLabel.text = nutriDataValue[indexPath.row]
+        } else {
+            cell = tableView.dequeueReusableCell(withIdentifier: "ingredCell", for: indexPath) as! NutriCell
+            cell.label.text = item?.ingredients[indexPath.row].name
+            cell.descriptionLabel.text = item?.ingredients[indexPath.row].quantity
+        }
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        cell.label.text = nutriDataLabel[indexPath.row]
-        cell.descriptionLabel.text = nutriDataValue[indexPath.row]
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        if (tableView.tag == 1) {
+            return 6
+        } else {
+            return item?.ingredients.count ?? 0
+        }
     }
 
 }

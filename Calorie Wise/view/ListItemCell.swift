@@ -1,6 +1,6 @@
 //
 //  ListItemCell.swift
-//  Cook Book
+//  Calorie Wise
 //
 //  Created by Tharaka Gamachchi on 2023-01-02.
 //
@@ -66,7 +66,7 @@ class ListItemCell: UITableViewCell {
                     self.item?.isBookMarked = false
                     self.animationView.currentProgress = 0
                     ApiCall.removeBookmark(item: self.item!._id!){ () in
-                        self.delegate.showToast(message: "Save Removed")
+                        self.delegate.showToast(message: "Removed from Favourites")
                     }
                 })
             } else {
@@ -75,7 +75,7 @@ class ListItemCell: UITableViewCell {
                     self.item?.isBookMarked = true
                     self.animationView.currentProgress = 1
                     ApiCall.addBookmark(item: self.item!._id!){ () in
-                        self.delegate.showToast(message: "Recipe Saved")
+                        self.delegate.showToast(message: "Added to Favourites")
                     }
                 })
             }

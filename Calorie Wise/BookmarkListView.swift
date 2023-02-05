@@ -1,6 +1,6 @@
 //
 //  BookmarkListView.swift
-//  Cook Book
+//  Calorie Wise
 //
 //  Created by Tharaka Gamachchi on 2023-01-02.
 //
@@ -12,7 +12,6 @@ import Lottie
 class BookmarkListView: UITableViewController, ListItemDelegate {
     
     let cellId = "favCellId"
-    var catId = ""
     var items: [ItemDTO] = []
     static var needToRefresh = false;
     
@@ -31,6 +30,11 @@ class BookmarkListView: UITableViewController, ListItemDelegate {
         tableView.separatorInset = UIEdgeInsets.init(top: 0, left: 10, bottom: 0, right: 10)
         
         ApiCall.getBookmarkedForUser{ (recipes) in
+            if (recipes == nil) {
+                let errorAlert = UIAlertController(title: "Alert", message: "Error occurred when retrieving data", preferredStyle: .alert)
+                errorAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                self.present(errorAlert, animated: true, completion: nil)
+            }
             self.items = recipes ?? []
             self.tableView.reloadData()
             BookmarkListView.needToRefresh = false
@@ -44,6 +48,11 @@ class BookmarkListView: UITableViewController, ListItemDelegate {
         
         if (BookmarkListView.needToRefresh) {
             ApiCall.getBookmarkedForUser{ (recipes) in
+                if (recipes == nil) {
+                    let errorAlert = UIAlertController(title: "Alert", message: "Error occurred when retrieving data", preferredStyle: .alert)
+                    errorAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                    self.present(errorAlert, animated: true, completion: nil)
+                }
                 self.items = recipes ?? []
                 self.tableView.reloadData()
                 BookmarkListView.needToRefresh = false
@@ -59,11 +68,11 @@ class BookmarkListView: UITableViewController, ListItemDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! ListItemCell
         let dto = self.items[indexPath.row]
-        let image = (UIImage(systemName: "carrot")?.withTintColor(.systemGray, renderingMode: .alwaysOriginal))!
+        let image = (UIImage(systemName: "leaf")?.withTintColor(.systemGray, renderingMode: .alwaysOriginal))!
         ApiCall.fetchProductImage(path: dto.imagePath){ (newImage) in
-            cell.item = Item(_id: dto._id, name: dto.name, description: dto.description, image: newImage, isBookMarked: dto.isBookMarked, score: dto.score, calorie: dto.calorie, protein: dto.protein, fat: dto.fat, carbohydrate: dto.carbohydrate, fiber: dto.fiber, calcium: dto.calcium)
+            cell.item = Item(_id: dto._id, name: dto.name, description: dto.description, image: newImage, isBookMarked: dto.isBookMarked, score: dto.score, calorie: dto.calorie, protein: dto.protein, fat: dto.fat, carbohydrate: dto.carbohydrate, fiber: dto.fiber, calcium: dto.calcium, ingredients: dto.ingredients)
         }
-        cell.item = Item(_id: dto._id, name: dto.name, description: dto.description, image: image, isBookMarked: dto.isBookMarked, score: dto.score, calorie: dto.calorie, protein: dto.protein, fat: dto.fat, carbohydrate: dto.carbohydrate, fiber: dto.fiber, calcium: dto.calcium)
+        cell.item = Item(_id: dto._id, name: dto.name, description: dto.description, image: image, isBookMarked: dto.isBookMarked, score: dto.score, calorie: dto.calorie, protein: dto.protein, fat: dto.fat, carbohydrate: dto.carbohydrate, fiber: dto.fiber, calcium: dto.calcium, ingredients: dto.ingredients)
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
         cell.delegate = self
         return cell
@@ -96,7 +105,7 @@ class BookmarkListView: UITableViewController, ListItemDelegate {
     }
     
     func goToLoginPress(){
-        let refreshAlert = UIAlertController(title: "Alert", message: "Please login to save recipe", preferredStyle: .alert)
+        let refreshAlert = UIAlertController(title: "Alert", message: "Please login to add favourite", preferredStyle: .alert)
         refreshAlert.addAction(UIAlertAction(title: "Login", style: .default, handler: { (action: UIAlertAction!) in
             self.navigationController?.pushViewController(LoginView(), animated: true)
         }))
@@ -107,6 +116,11 @@ class BookmarkListView: UITableViewController, ListItemDelegate {
     func showToast(message: String){
         self.showToast(message: message, font: .systemFont(ofSize: 12.0))
         ApiCall.getBookmarkedForUser{ (recipes) in
+            if (recipes == nil) {
+                let errorAlert = UIAlertController(title: "Alert", message: "Error occurred when retrieving data", preferredStyle: .alert)
+                errorAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                self.present(errorAlert, animated: true, completion: nil)
+            }
             self.items = recipes ?? []
             self.tableView.reloadData()
             BookmarkListView.needToRefresh = false

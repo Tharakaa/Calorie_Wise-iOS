@@ -1,6 +1,6 @@
 //
 //  HomeView.swift
-//  Cook Book
+//  Calorie Wise
 //
 //  Created by Tharaka Gamachchi on 2023-01-02.
 //
@@ -31,7 +31,7 @@ class HomeView: UITableViewController, CategoryDelegate {
         
         let loginButton:UIBarButtonItem
         if (ApiCall.isLoggedIn()) {
-            loginButton = UIBarButtonItem(image: UIImage(systemName: "person.badge.shield.checkmark.fill"), style: .plain, target: self, action: #selector(goToAccount))
+            loginButton = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle.fill.badge.checkmark"), style: .plain, target: self, action: #selector(goToAccount))
         } else {
             loginButton = UIBarButtonItem(image: UIImage(systemName: "person.badge.plus"), style: .plain, target: self, action: #selector(goToLogin))
         }
@@ -56,7 +56,7 @@ class HomeView: UITableViewController, CategoryDelegate {
         super.viewWillAppear(animated)
         let loginButton:UIBarButtonItem
         if (ApiCall.isLoggedIn()) {
-            loginButton = UIBarButtonItem(image: UIImage(systemName: "person.badge.shield.checkmark.fill"), style: .plain, target: self, action: #selector(goToAccount))
+            loginButton = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle.fill.badge.checkmark"), style: .plain, target: self, action: #selector(goToAccount))
         } else {
             loginButton = UIBarButtonItem(image: UIImage(systemName: "person.badge.plus"), style: .plain, target: self, action: #selector(goToLogin))
         }

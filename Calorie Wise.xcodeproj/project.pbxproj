@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E68373F9298F959A00F61026 /* calorie_wise_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = E68373F8298F959A00F61026 /* calorie_wise_logo.png */; };
 		E68FBE1C296F521B0052C45E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE1B296F521B0052C45E /* AppDelegate.swift */; };
 		E68FBE1E296F521B0052C45E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68FBE1D296F521B0052C45E /* SceneDelegate.swift */; };
 		E68FBE25296F521C0052C45E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E68FBE24296F521C0052C45E /* Assets.xcassets */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E68373F8298F959A00F61026 /* calorie_wise_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calorie_wise_logo.png; sourceTree = "<group>"; };
 		E68FBE18296F521B0052C45E /* Calorie Wise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Calorie Wise.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E68FBE1B296F521B0052C45E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E68FBE1D296F521B0052C45E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 		E68FBE30296F52850052C45E /* img */ = {
 			isa = PBXGroup;
 			children = (
+				E68373F8298F959A00F61026 /* calorie_wise_logo.png */,
 				E68FBE32296F52990052C45E /* food-background.png */,
 			);
 			path = img;
@@ -236,6 +239,7 @@
 				E68FBE37296F52A10052C45E /* 42135-done.json in Resources */,
 				E68FBE36296F52A10052C45E /* 97064-bookmark-icon.json in Resources */,
 				E68FBE25296F521C0052C45E /* Assets.xcassets in Resources */,
+				E68373F9298F959A00F61026 /* calorie_wise_logo.png in Resources */,
 				E68FBE33296F52990052C45E /* food-background.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -478,8 +482,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
 			requirement = {
-				branch = master;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.5.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

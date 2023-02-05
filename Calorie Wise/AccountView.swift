@@ -1,6 +1,6 @@
 //
 //  AccountView.swift
-//  Cook Book
+//  Calorie Wise
 //
 //  Created by Tharaka Gamachchi on 2023-01-03.
 //
@@ -29,9 +29,14 @@ class AccountView: UIViewController {
     }
     
     @objc func logoutClicked() {
-        // Clear data when loggin out
-        ApiCall.logout()
-        self.navigationController?.popToRootViewController(animated: true)
+        // Confirm and Clear data when loggin out
+        let logoutAlert = UIAlertController(title: "Alert", message: "Are you sure you want to logout?", preferredStyle: .alert)
+        logoutAlert.addAction(UIAlertAction(title: "Logout", style: .destructive, handler: { (action: UIAlertAction!) in
+            ApiCall.logout()
+            self.navigationController?.popToRootViewController(animated: true)
+        }))
+        logoutAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(logoutAlert, animated: true, completion: nil)
     }
     
     @objc func goToBookmarks() {
@@ -40,6 +45,7 @@ class AccountView: UIViewController {
     
     // setup UI elements and layout constraints.
     func setupView() {
+        view.backgroundColor = .systemBackground
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.backgroundColor = .systemBackground
@@ -92,7 +98,7 @@ class AccountView: UIViewController {
         
         let bookmarksLabel = UILabel();
         bookmarksLabel.translatesAutoresizingMaskIntoConstraints = false
-        bookmarksLabel.text = "Saved Recipes"
+        bookmarksLabel.text = "Favourite Items"
         bookmarksLabel.numberOfLines = 0
         bookmarksLabel.font = UIFont.preferredFont(forTextStyle: .headline)
         bookmarksLabel.adjustsFontForContentSizeCategory = true
@@ -116,10 +122,10 @@ class AccountView: UIViewController {
         view.addSubview(scrollView)
         
         NSLayoutConstraint.activate([
-            scrollView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            scrollView.heightAnchor.constraint(equalTo: view.heightAnchor),
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            scrollView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
+            scrollView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeTopAnchor),
+            scrollView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             
             personView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 20),
             personView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.2),
